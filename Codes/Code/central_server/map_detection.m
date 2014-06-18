@@ -1,0 +1,226 @@
+                                          
+%>=======================================================================
+%> @file
+%>
+%> @author sushil kumar meena (sushilm.iitb@gmail.com)
+%> @author palak dalal (palak.dalal@gmail.com)
+%> @author mudit malpani (cooldudemd@gmailcom)
+%> @author hemant noval (novalhemant@gmail.com)
+
+%>
+%>This code takes image of the arena (empty) and makes road network out of
+%>it. The image contains black roads with white lines over it and junction
+%>have slightly bigger white blobs. There are several parameters that need
+%>to be configured. These are placed below under config variables heading.
+%>Cropping needs to remove outside arena objects. Finally two files are
+%>generated-one contains the junction coordinates and second contains the
+%>edge information.
+%>
+%>Algorithm:
+%>Captured image is cropped. Smoothening is applied. Then using erosion
+%>followed by dilation and subtraction from original image, very big white 
+%>areas(places between roads) are removed to get image having only road
+%>network (orgImgWithoutBigWhite). Image having only nodes is acheived by
+%>carefully eroding and dilating road network(orgImgWithoutBigWhite)using
+%>structure element structElemRemovRoad. Connected components of this image
+%>is taken. This gives all the geometric properties of the junction. The
+%>junctions in road network are given special color value 100. For each node
+%>flood fill is called. This gives its connectivity to all other junction.
+%>Using this information appropriate information is filled in the output
+%>files
+%========================================================================
+
+clc
+clear all;
+global A8;
+global r;
+tic
+%>config variables
+whiteRedLower=150;
+whiteGreenLower=150;
+whiteBlueLower=150;
+structElemRemovBiggerWhite = strel('square', 28);
+structElemRemovRoad = strel('square', 9);
+structElemWhiteSmooth = strel('square', 8);
+xBlobsize=12;
+yBlobsize=12;
+binaryThres=0.5;
+%> for cropping
+xmin = 102;
+ymin = 35;
+wid = 408;
+ht = 383;
+
+
+%>taking video
+vid=videoinput('winvideo',2,'YUY2_640x480'); % setting camera properties
+set(vid, 'FramesPerTrigger', Inf);
+set(vid, 'ReturnedColorspace', 'rgb')
+vid.FrameGrabInterval = 5;
+
+start(vid);
+preview(vid);
+orgImage = getsnapshot(vid);
+flushdata(vid);
+%orgImage = imread('non_crop.jpg');
+
+%>cropping image to remove side noise
+orgImage = imcrop(orgImage, [xmin, ymin, wid, ht]);
+figure,imshow(orgImage);
+%>converting to binary values - 0 and 255
+[n,m,d] = size(orgImage);
+for i=1:n
+    for j=1:m
+        if(orgImage(i,j,1)>whiteRedLower&& orgImage(i,j,2)>whiteGreenLower&& orgImage(i,j,3)>whiteBlueLower)
+            orgImage(i,j,1)=255;
+            orgImage(i,j,2)=255;
+            orgImage(i,j,3)=255;
+        else
+            orgImage(i,j,1)=0;
+            orgImage(i,j,2)=0;
+            orgImage(i,j,3)=0;
+        end
+    end
+end
+
+figure,imshow(orgImage);
+orgImage=rgb2gray(orgImage);
+%>smoothening white pixels
+orgImage = imdilate(orgImage,structElemWhiteSmooth);
+orgImage = imerode(orgImage, structElemWhiteSmooth);
+%figure,imshow(orgImage);
+%>removing bigger white blobs
+imgHavingBiggerWhite = imerode(orgImage, structElemRemovBiggerWhite);
+imgHavingBiggerWhite = imdilate(imgHavingBiggerWhite, structElemRemovBiggerWhite);
+orgImageWithoutBigWhite = orgImage-imgHavingBiggerWhite; 
+%figure, imshow (imgHavingBiggerWhite);
+figure, imshow(orgImageWithoutBigWhite);
+%>making only nodes image
+imageWithJunction = imerode(orgImageWithoutBigWhite, structElemRemovRoad);
+imageWithJunction = imdilate(imageWithJunction, structElemRemovRoad);
+figure,imshow(imageWithJunction);
+binaryImage = im2bw(imageWithJunction, binaryThres);
+%figure,imshow(binaryImage);
+binaryRoadNetwork = im2bw(orgImageWithoutBigWhite);
+newimg_junc = imageWithJunction;
+
+%>assigning special color to nodes only
+for i=1:n
+    for j=1:m
+        if((255-newimg_junc(i,j))<50)
+            newimg_junc(i,j) = 100;
+        else
+            newimg_junc(i,j) = 0;
+            
+        end
+        
+    end
+end
+
+%>final image with road network and junctions (with pixel value 100)
+finalimg = orgImageWithoutBigWhite - newimg_junc;
+
+[L,num] = bwlabel(binaryImage,4);
+RGB_label = label2rgb(L);
+figure,imshow(RGB_label);
+graindata = regionprops(L, 'basic');
+
+%>final image in which flood fill will be used
+A8 = padarray(finalimg, [1 1], 0);
+img = A8;
+[r,c] = size(A8);
+
+%>array for edges between junctions
+links = zeros(num);
+for i=1:num
+    for j=1:num
+        links(i,j)=0;
+    end
+end
+
+targetColor=255;
+replacementColor=20;0
+fidNode = fopen('node','w');
+fidEdge = fopen('edge','w');
+fprintf(fidNode,'%d ',num);
+%>writing flood fill for each centroid
+for i=1:num  
+    cx = floor(graindata(i).Centroid(2));
+    cy =floor(graindata(i).Centroid(1));
+    fprintf(fidNode,'%d ',cx);
+    fprintf(fidNode,'%d ',cy);
+    
+    %>applying floodfill for top border of the blob
+    y=-yBlobsize;
+    for x=-xBlobsize:xBlobsize
+            if(cx+x >= r-2 || cy+y>=c-2||cx+x <2 || cy+y< 2)
+                continue;
+            end
+            FloodFill(cx+x,cy+y,targetColor,replacementColor);
+    end
+    %>applying floodfill for bottom border of the blob
+    y=yBlobsize;
+    for x=-xBlobsize:xBlobsize
+            if(cx+x >= r-2 || cy+y>=c-2||cx+x <2 || cy+y< 2)
+                continue;
+            end
+            FloodFill(cx+x,cy+y,targetColor,replacementColor);
+    end
+    %>applying floodfill for left border of the blob
+    x=-xBlobsize;
+    for y=-yBlobsize:yBlobsize
+            if(cx+x >= r-2 || cy+y>=c-2||cx+x <2 || cy+y< 2)
+                continue;
+            end
+            FloodFill(cx+x,cy+y,targetColor,replacementColor);
+    end
+    %>applying floodfill for right border of the blob
+    x=xBlobsize;
+    for y=-yBlobsize:yBlobsize
+            if(cx+x >= r-2 || cy+y>=c-2||cx+x <2 || cy+y< 2)
+                continue;
+            end
+            FloodFill(cx+x,cy+y,targetColor,replacementColor);
+    end
+    
+    %>checking which nodes have replacement color in their proximity
+    for j=1:num
+        if(j==i)
+            continue;
+        end
+        cx_n = floor(graindata(j).Centroid(2));
+        cy_n =floor(graindata(j).Centroid(1));
+        
+        for x_n=-xBlobsize:xBlobsize
+            for y_n = -yBlobsize:yBlobsize
+                if(cx_n+x_n >= r || cy_n+y_n>=c-2||cx_n+x_n <2 || cy_n+y_n< 2)
+                    continue;
+                end
+                if(A8(cx_n+x_n,cy_n+y_n) == 20)
+                    links(i,j)=1;
+                end
+            end
+        end
+    end
+    A8 = img;        
+end
+
+%>counting no of edges for testing purpose
+ones=0;
+for i=1:num
+    for j=1:num
+        if(links(i,j)==1)
+            ones=ones+1;
+            fprintf(fidEdge,'1 ');
+        else
+            fprintf(fidEdge,'0 ');
+        end
+    end
+end
+%links
+ones
+toc
+
+
+
+%imshow(RGB_label);

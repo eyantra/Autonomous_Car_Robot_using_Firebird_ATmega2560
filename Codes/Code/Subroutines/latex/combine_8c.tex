@@ -1,0 +1,340 @@
+\hypertarget{combine_8c}{
+\section{combine.c File Reference}
+\label{combine_8c}\index{combine.c@{combine.c}}
+}
+{\ttfamily \#include $<$stdio.h$>$}\par
+{\ttfamily \#include $<$stdlib.h$>$}\par
+{\ttfamily \#include $<$math.h$>$}\par
+\subsection*{Defines}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{combine_8c_a67e5e5e85647c3f3c8333c0799e6b502}{
+\#define {\bfseries xTh}~100}
+\label{combine_8c_a67e5e5e85647c3f3c8333c0799e6b502}
+
+\item 
+\hypertarget{combine_8c_a2c2bdecdcffd280f008b96e75dccadb9}{
+\#define {\bfseries yTh}~100}
+\label{combine_8c_a2c2bdecdcffd280f008b96e75dccadb9}
+
+\item 
+\#define \hyperlink{combine_8c_a3fc195faa73ae1b08b7936635d5b5d4c}{thresh}~40
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{combine_8c_aacc329b70a383b38415da71304c8474f}{almost\_\-same} (int a, int b)
+\item 
+int \hyperlink{combine_8c_a87ac26589b1f532d2fe5f38637392ee3}{find\_\-nearest\_\-junction} (int $\ast$x, int $\ast$y, int fx, int fy, int bx, int by)
+\item 
+int \hyperlink{combine_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}{main} ()
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{combine_8c_a9bb6aa82571eb861fc56723217d23b17}{NUM\_\-NODES}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{DoxyAuthor}{Author}
+sushil kumar meena (\href{mailto:sushilm.iitb@gmail.com}{\tt sushilm.iitb@gmail.com}) 
+
+mudit malpani (\href{mailto:cooldudemd.malpani@gmail.com}{\tt cooldudemd.malpani@gmail.com}) 
+
+palak dalal (\href{mailto:palak.dalal@gmail.com}{\tt palak.dalal@gmail.com}) 
+
+hemant noval (\href{mailto:novalhemant@gmail.com}{\tt novalhemant@gmail.com})
+\end{DoxyAuthor}
+Description: This code is to be used after each individual junctions are extracted by Matlab file map\_\-detection.m. Input files are to be placed in the same directory. Following routines does the task of grouping the junctions of same node and then establishing the road network in terms of these junctions. 
+
+\subsection{Define Documentation}
+\hypertarget{combine_8c_a3fc195faa73ae1b08b7936635d5b5d4c}{
+\index{combine.c@{combine.c}!thresh@{thresh}}
+\index{thresh@{thresh}!combine.c@{combine.c}}
+\subsubsection[{thresh}]{\setlength{\rightskip}{0pt plus 5cm}\#define thresh~40}}
+\label{combine_8c_a3fc195faa73ae1b08b7936635d5b5d4c}
+Maximum variation in te x/y coordinates of any two lane junctions on the same lane 
+
+\subsection{Function Documentation}
+\hypertarget{combine_8c_aacc329b70a383b38415da71304c8474f}{
+\index{combine.c@{combine.c}!almost\_\-same@{almost\_\-same}}
+\index{almost\_\-same@{almost\_\-same}!combine.c@{combine.c}}
+\subsubsection[{almost\_\-same}]{\setlength{\rightskip}{0pt plus 5cm}int almost\_\-same (
+\begin{DoxyParamCaption}
+\item[{int}]{a, }
+\item[{int}]{b}
+\end{DoxyParamCaption}
+)}}
+\label{combine_8c_aacc329b70a383b38415da71304c8474f}
+returns whether the coordinates(a,b) of the nodes lie on same lane 
+\begin{DoxyCode}
+                              {
+    return (abs(a - b) < thresh);
+}
+\end{DoxyCode}
+\hypertarget{combine_8c_a87ac26589b1f532d2fe5f38637392ee3}{
+\index{combine.c@{combine.c}!find\_\-nearest\_\-junction@{find\_\-nearest\_\-junction}}
+\index{find\_\-nearest\_\-junction@{find\_\-nearest\_\-junction}!combine.c@{combine.c}}
+\subsubsection[{find\_\-nearest\_\-junction}]{\setlength{\rightskip}{0pt plus 5cm}int find\_\-nearest\_\-junction (
+\begin{DoxyParamCaption}
+\item[{int $\ast$}]{x, }
+\item[{int $\ast$}]{y, }
+\item[{int}]{fx, }
+\item[{int}]{fy, }
+\item[{int}]{bx, }
+\item[{int}]{by}
+\end{DoxyParamCaption}
+)}}
+\label{combine_8c_a87ac26589b1f532d2fe5f38637392ee3}
+x -\/ array of x coordinates of the lane junctions y -\/ array of y coordiantes of the lane junctions fx -\/ x coordinate of the front side of the bot fy -\/ y coordinate of the front side of the bot bx -\/ x coordinate of the back side of the bot by -\/ y coordinate of the back side of the bot returns the lane junction nearest to the bot in the direction of the bot 
+\begin{DoxyCode}
+                                                                          {
+    //determines if the bot is aligned with vertical or horizontal lane
+    //y_same = 1 => bot aligned with horizontal lane
+    //y_same = 0 => bot aligned with vertical lane
+    int y_same = -1;
+    float y_comm, x_comm;
+    int greater;
+    int diff_coor;
+    if (abs(fx - bx) < abs(fy - by)) {
+        diff_coor = fy;
+        y_same = 0; //x coordinates same => bot aligned with vertical lane
+        x_comm = (fx + bx) / 2;
+        if (fy > by) {
+            greater = 1;
+        } else {
+            greater = 0;
+        }
+    } else {
+        printf("after 2\n");
+        diff_coor = fx;
+        y_same = 1; // y coordinates same => bot aligned with horizontal lane
+        y_comm = (fy + by) / 2;
+        if (fx > bx) {
+            greater = 1;
+
+        } else {
+            greater = 0;
+        }
+
+    }
+
+    int i;
+    int nearest_junct = -1;
+    int min_val = 100000;
+    for (i = 0; i < NUM_NODES; i++) {
+        if (y_same) {
+            if (almost_same(y_comm, y[i])) {
+                if (greater && x[i] > fx && x[i] - fx < min_val) {
+                    printf("%d is greater than %d\n", x[i], fx);
+                    nearest_junct = i;
+                    min_val = x[i] - fx;
+                }
+            }
+            if (greater == 0 && x[i] < fx && fx - x[i] < min_val) {
+                nearest_junct = i;
+                min_val = fx - x[i];
+            }
+        } else {
+            if (almost_same(x_comm, x[i])) {
+                if (greater && y[i] > fy && y[i] - fy < min_val) {
+                    printf("%d is greater than %d\n", y[i], fy);
+                    nearest_junct = i;
+                    min_val = y[i] - fy;
+                }
+            }
+            if (greater == 0 && y[i] < fy && fy - y[i] < min_val) {
+                nearest_junct = i;
+                min_val = fy - y[i];
+            }
+        }
+    }
+    printf("nears %d\n", nearest_junct);
+    return nearest_junct;
+
+}
+\end{DoxyCode}
+\hypertarget{combine_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}{
+\index{combine.c@{combine.c}!main@{main}}
+\index{main@{main}!combine.c@{combine.c}}
+\subsubsection[{main}]{\setlength{\rightskip}{0pt plus 5cm}int main (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{combine_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}
+Combines lane junctions into road junctions and creates the files of x\&y coordinates on road junctions and their adjacency matrix 
+
+$<$ File containing number of lane junctions and their x \& y coordinates.
+
+$<$ File containing adjacency matrix of graph with nodes as lane junctions and edges as lanes.
+
+$<$ x coordinates of lane junctions
+
+$<$ y coordinates of lane junctions
+
+$<$ minimum x coordinates of road junctions
+
+$<$ minimum y coordinates of road junctions
+
+$<$ maximum x coordinates of road junctions
+
+$<$ maximum y coordinates of road junctions
+
+$<$ The road junction for eac of the lane junction
+
+$<$ Total number of road junctions
+
+$<$ x coordinates of the mid points of the road junctions
+
+$<$ y coordinates of the mid points of the road junctions
+
+$<$ file containing the number of road junctions and their x and y coordinates
+
+$<$ adjacency matrix for road junctions where each edge contains number of lanes in the road
+
+$<$ nearest node to the bot. This will serve as the source node 
+
+
+\begin{DoxyCode}
+           {
+    FILE *nodeFile; 
+    nodeFile = fopen("node", "r");
+    FILE *edgeFile; 
+    edgeFile = fopen("edge", "r");
+
+    fscanf(nodeFile, "%d", &NUM_NODES);
+
+    int* xCords = malloc(NUM_NODES * sizeof (int)); 
+    int* yCords = malloc(NUM_NODES * sizeof (int)); 
+    int* minX = malloc(NUM_NODES * sizeof (int)); 
+    int* minY = malloc(NUM_NODES * sizeof (int)); 
+    int* maxX = malloc(NUM_NODES * sizeof (int)); 
+    int* maxY = malloc(NUM_NODES * sizeof (int)); 
+    int* hash = malloc(NUM_NODES * sizeof (int)); 
+    int actualNum = 0; 
+    int i, j;
+
+    for (i = 0; i < NUM_NODES; i++) { // read x & y coordinates from the files
+        fscanf(nodeFile, "%d", &xCords[i]);
+        fscanf(nodeFile, "%d", &yCords[i]);
+    }
+
+    minX[0] = xCords[0];
+    minY[0] = yCords[0];
+    maxX[0] = xCords[0];
+    maxY[0] = yCords[0];
+    hash[0] = 0;
+
+    actualNum++;
+    int flag = 0;
+
+    for (i = 1; i < NUM_NODES; i++) {
+        flag = 0;
+        int x = xCords[i];
+        int y = yCords[i];
+        for (j = 0; j < actualNum; j++) {
+            printf("%d: %d %d %d %d %d %d %d %d\n", j, x, y, minX[j], maxX[j], mi
+      nY[j], maxY[j], abs(x - minX[j]), abs(y - minY[j]));
+                        // if the lane junction i is tha part of road junction j
+            if ((abs(x - minX[j]) < xTh && abs(y - minY[j]) < yTh) || (abs(x - mi
+      nX[j]) < xTh && abs(y - maxY[j]) < yTh) || (abs(x - maxX[j]) < xTh && abs(y - max
+      Y[j]) < yTh) || (abs(x - maxX[j]) < xTh && abs(y - minY[j]) < yTh)) {
+                if (x < minX[j]) minX[j] = x;
+                if (y < minY[j]) minY[j] = y;
+                if (x > maxX[j]) maxX[j] = x;
+                if (y > maxY[j]) maxY[j] = y;
+                hash[i] = j;
+                flag = 1;
+                break;
+            }
+        }
+        if (flag == 0) { // if the lane junction is not the part of the existing 
+      road junctions. Create a new road juntion
+            minX[actualNum] = x;
+            minY[actualNum] = y;
+            maxX[actualNum] = x;
+            maxY[actualNum] = y;
+            hash[i] = actualNum;
+            actualNum++;
+        }
+    }
+
+    int* actualX = malloc(actualNum * sizeof (int));
+    int* actualY = malloc(actualNum * sizeof (int));
+    for (i = 0; i < actualNum; i++) {
+        actualX[i] = (minX[i] + maxX[i]) / 2;
+        actualY[i] = (minY[i] + maxY[i]) / 2;
+    }
+
+    FILE *actNodeFile; 
+    actNodeFile = fopen("nodeAct", "w");
+
+    fprintf(actNodeFile, "%d ", actualNum);
+    for (i = 0; i < actualNum; i++) {
+        //write x & y coordinates to file
+        fprintf(actNodeFile, "%d ", actualX[i]);
+        fprintf(actNodeFile, "%d ", actualY[i]);
+    }
+
+    fclose(actNodeFile);
+    int binary;
+    int graph[actualNum][actualNum];
+    FILE *actEdgeFile;
+    actEdgeFile = fopen("edgesAct", "w");
+    for (i = 0; i < actualNum; i++) {
+        for (j = 0; j < actualNum; j++) {
+            graph[i][j] = 0;
+        }
+    }
+
+    for (i = 0; i < NUM_NODES; i++) {
+        for (j = 0; j < NUM_NODES; j++) {
+            fscanf(edgeFile, "%d", &binary);
+            if (binary == 1) {
+                if (hash[i] != hash[j]) {
+                    graph[hash[i]][hash[j]]++;
+                }
+            }
+        }
+    }
+
+    for (i = 0; i < actualNum; i++) {
+        for (j = 0; j < actualNum; j++) {
+            //write number of lanes in each edge to file
+            fprintf(actEdgeFile, "%d ", graph[i][j]);
+        }
+    }
+
+    fclose(actEdgeFile);
+    FILE *botFile;
+    botFile = fopen("botPos", "r");
+
+    int fx, fy, bx, by;
+
+    fscanf(botFile, "%d", &fx);
+    fscanf(botFile, "%d", &fy);
+    fscanf(botFile, "%d", &bx);
+    fscanf(botFile, "%d", &by);
+    printf("here\n");
+    int junc = hash[find_nearest_junction(xCords, yCords, fx, fy, bx, by)];
+    printf("here\n");
+    printf("nodeOR %d\n", junc);
+
+    FILE *startFile;
+    startFile = fopen("start", "w");
+
+    fprintf(startFile, "%d", junc);
+
+}
+\end{DoxyCode}
+
+
+\subsection{Variable Documentation}
+\hypertarget{combine_8c_a9bb6aa82571eb861fc56723217d23b17}{
+\index{combine.c@{combine.c}!NUM\_\-NODES@{NUM\_\-NODES}}
+\index{NUM\_\-NODES@{NUM\_\-NODES}!combine.c@{combine.c}}
+\subsubsection[{NUM\_\-NODES}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf NUM\_\-NODES}}}
+\label{combine_8c_a9bb6aa82571eb861fc56723217d23b17}
+Number of lane junctions 

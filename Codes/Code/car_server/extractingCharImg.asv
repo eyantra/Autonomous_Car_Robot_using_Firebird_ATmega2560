@@ -1,0 +1,82 @@
+function [ finalImg ] = extractingCharImg( orgImage )
+%UNTITLED Summary of this function goes here
+%   Detailed explanation goes here
+%%%%%%%%%%%%%%%%%%%%%%%%%%%configVariables%%%%%%%%%%%%%%%%%%%
+redLower=180;
+greenUpper=180;
+blueUpper=180;
+binaryForRedCircleThres=0.2;
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+redRemovedImg = orgImage;
+[r c d] = size(orgImage);
+for i=1:r
+    for j=1:c
+        if(orgImage(i,j,1) > redLower && orgImage(i,j,2) <greenUpper && orgImage(i,j,3) <blueUpper)
+            redRemovedImg(i,j,1)=255;
+            redRemovedImg(i,j,2)=255;
+            redRemovedImg(i,j,3)=255;
+        end
+    end
+end
+figure,imshow(redRemovedImg);
+%%%extracting only circle from the red removed image%%%
+greyImg = rgb2gray(orgImage);
+redGrey = rgb2gray(redRemovedImg);
+figure,imshow(redGrey);
+onlyCircleImg = redGrey - greyImg
+structElem12 = strel('square', 4);
+onlyCircleImg= imdilate(onlyCircleImg, structElem12);
+onlyCircleImg = imerode(onlyCircleImg, structElem12);
+
+onlyCircleImg = imerode(onlyCircleImg, structElem12);
+onlyCircleImg= imdilate(onlyCircleImg, structElem12);
+figure, imshow(onlyCircleImg);
+binaryOnlyCircle = im2bw(onlyCircleImg,binaryForRedCircleThres); %%this has the binary image of only circle
+figure,imshow(binaryOnlyCircle);
+%%%left pass..whitening the black components to the left of circle
+for i=1:r
+    leftStarted=0;
+    for j=1:c
+        if(binaryOnlyCircle(i,j)==1)
+            break;
+        else
+            binaryOnlyCircle(i,j)=1;
+        end
+    end
+end
+
+%%%right pass... whitening the white components to the right of the circle
+for i=1:r
+    leftStarted=0;
+    for j=1:c
+        if(binaryOnlyCircle(i,c-j+1)==1)
+            break;
+        else
+            binaryOnlyCircle(i,c-j+1)=1;
+        end
+    end
+end
+
+
+%%%whiteing the left the pixels in redGrey which corresponds to white
+%%%pixels in binaryOnlyCircle
+for i=1:r
+    leftStarted=0;
+    for j=1:c
+        if(binaryOnlyCircle(i,j)==1)
+            redGrey(i,j)=255;
+        end
+    end
+end
+figure,imshow(redGrey);
+binaryRedGrey = im2bw(redGrey);
+figure,imshow(binaryRedGrey);
+%%%smoothening the figure
+finalImg = imdilate(binaryRedGrey, structElem12);
+figure,imshow(finalImg);
+%%%final image contains the black character over white background in
+%%%binaryimage
+finalImg =~ finalImg;
+
+end
+

@@ -1,0 +1,374 @@
+\hypertarget{lcd_8c}{
+\section{lcd.c File Reference}
+\label{lcd_8c}\index{lcd.c@{lcd.c}}
+}
+{\ttfamily \#include $<$avr/io.h$>$}\par
+{\ttfamily \#include $<$avr/delay.h$>$}\par
+{\ttfamily \#include $<$util/delay.h$>$}\par
+\subsection*{Defines}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{lcd_8c_a9d4ad5467cb8a39312513dfaaf4d950a}{
+\#define {\bfseries FCPU}~11059200ul}
+\label{lcd_8c_a9d4ad5467cb8a39312513dfaaf4d950a}
+
+\item 
+\hypertarget{lcd_8c_af8903d8eea3868940c60af887473b152}{
+\#define {\bfseries RS}~0}
+\label{lcd_8c_af8903d8eea3868940c60af887473b152}
+
+\item 
+\hypertarget{lcd_8c_afc4ded33ac0ca43defcce639e965748a}{
+\#define {\bfseries RW}~1}
+\label{lcd_8c_afc4ded33ac0ca43defcce639e965748a}
+
+\item 
+\hypertarget{lcd_8c_a22e6626f2c98ed902f8ded47f6438c05}{
+\#define {\bfseries EN}~2}
+\label{lcd_8c_a22e6626f2c98ed902f8ded47f6438c05}
+
+\item 
+\hypertarget{lcd_8c_ab44cc79afa2e158e5173a42d0bdd01b0}{
+\#define {\bfseries lcd\_\-port}~PORTC}
+\label{lcd_8c_ab44cc79afa2e158e5173a42d0bdd01b0}
+
+\item 
+\hypertarget{lcd_8c_a0e1a587a6bb537fb5e9c836231291df4}{
+\#define {\bfseries sbit}(reg, bit)~reg $|$= (1$<$$<$bit)}
+\label{lcd_8c_a0e1a587a6bb537fb5e9c836231291df4}
+
+\item 
+\hypertarget{lcd_8c_aad24a3ffd9b61c778f99521f717864a9}{
+\#define {\bfseries cbit}(reg, bit)~reg \&= $\sim$(1$<$$<$bit)}
+\label{lcd_8c_aad24a3ffd9b61c778f99521f717864a9}
+
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{lcd_8c_aa239ab5a6704dda21c5071b32a3cf3a8}{
+void {\bfseries init\_\-ports} ()}
+\label{lcd_8c_aa239ab5a6704dda21c5071b32a3cf3a8}
+
+\item 
+\hypertarget{lcd_8c_a8cb7183ba3f64a4c678db00589de269f}{
+void {\bfseries lcd\_\-reset\_\-4bit} ()}
+\label{lcd_8c_a8cb7183ba3f64a4c678db00589de269f}
+
+\item 
+void \hyperlink{lcd_8c_ac23e73124dc9fabae95671fe71d074a6}{lcd\_\-init} ()
+\item 
+void \hyperlink{lcd_8c_afff7370014e73715ce0d31b4d994c916}{lcd\_\-wr\_\-command} (unsigned char)
+\item 
+void \hyperlink{lcd_8c_a02b47802a409ab525f2fda28140150b0}{lcd\_\-wr\_\-char} (char)
+\item 
+\hypertarget{lcd_8c_a60675105b93bba6762aaab88d732365a}{
+void {\bfseries lcd\_\-home} ()}
+\label{lcd_8c_a60675105b93bba6762aaab88d732365a}
+
+\item 
+void \hyperlink{lcd_8c_ad8006d544921c9533806fdc898c75112}{lcd\_\-cursor} (char, char)
+\item 
+void \hyperlink{lcd_8c_a48b63200c8d5c8c5231031674cbb63d6}{lcd\_\-print} (char, char, unsigned int, int)
+\item 
+void \hyperlink{lcd_8c_a1eeb0747ef56e3dab0a64e7688b3ff65}{lcd\_\-string} (char $\ast$)
+\item 
+void \hyperlink{lcd_8c_a3f8a3732239f1ff251be98da40c120e1}{lcd\_\-set\_\-4bit} ()
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{lcd_8c_a13006074294a071b6c7a268a498f77f7}{
+unsigned int {\bfseries temp}}
+\label{lcd_8c_a13006074294a071b6c7a268a498f77f7}
+
+\item 
+\hypertarget{lcd_8c_a09cef70e6322053ea80ae603446346c5}{
+unsigned int {\bfseries unit}}
+\label{lcd_8c_a09cef70e6322053ea80ae603446346c5}
+
+\item 
+\hypertarget{lcd_8c_ab84b805352ca4b7ecfc9601ddab528bc}{
+unsigned int {\bfseries tens}}
+\label{lcd_8c_ab84b805352ca4b7ecfc9601ddab528bc}
+
+\item 
+\hypertarget{lcd_8c_a913b0b4b2d4fd1ccc45534741d386cc8}{
+unsigned int {\bfseries hundred}}
+\label{lcd_8c_a913b0b4b2d4fd1ccc45534741d386cc8}
+
+\item 
+\hypertarget{lcd_8c_aa790b5f78a8f90d800d64c46c3e40205}{
+unsigned int {\bfseries thousand}}
+\label{lcd_8c_aa790b5f78a8f90d800d64c46c3e40205}
+
+\item 
+\hypertarget{lcd_8c_ae98244497f01cb51c50a6a1d18642b71}{
+unsigned int {\bfseries million}}
+\label{lcd_8c_ae98244497f01cb51c50a6a1d18642b71}
+
+\item 
+\hypertarget{lcd_8c_acb559820d9ca11295b4500f179ef6392}{
+int {\bfseries i}}
+\label{lcd_8c_acb559820d9ca11295b4500f179ef6392}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{DoxyAuthor}{Author}
+Taken from \href{http://www.e-yantra.org/ci/}{\tt http://www.e-\/yantra.org/ci/}
+\end{DoxyAuthor}
+Description: This file handles functions that are used for lcd display on the bot 
+
+\subsection{Function Documentation}
+\hypertarget{lcd_8c_ad8006d544921c9533806fdc898c75112}{
+\index{lcd.c@{lcd.c}!lcd\_\-cursor@{lcd\_\-cursor}}
+\index{lcd\_\-cursor@{lcd\_\-cursor}!lcd.c@{lcd.c}}
+\subsubsection[{lcd\_\-cursor}]{\setlength{\rightskip}{0pt plus 5cm}void lcd\_\-cursor (
+\begin{DoxyParamCaption}
+\item[{char}]{row, }
+\item[{char}]{column}
+\end{DoxyParamCaption}
+)}}
+\label{lcd_8c_ad8006d544921c9533806fdc898c75112}
+Position the LCD cursor at \char`\"{}row\char`\"{}, \char`\"{}column\char`\"{}. 
+\begin{DoxyCode}
+{
+        switch (row) {
+                case 1: lcd_wr_command (0x80 + column - 1); break;
+                case 2: lcd_wr_command (0xc0 + column - 1); break;
+                case 3: lcd_wr_command (0x94 + column - 1); break;
+                case 4: lcd_wr_command (0xd4 + column - 1); break;
+                default: break;
+        }
+}
+\end{DoxyCode}
+\hypertarget{lcd_8c_ac23e73124dc9fabae95671fe71d074a6}{
+\index{lcd.c@{lcd.c}!lcd\_\-init@{lcd\_\-init}}
+\index{lcd\_\-init@{lcd\_\-init}!lcd.c@{lcd.c}}
+\subsubsection[{lcd\_\-init}]{\setlength{\rightskip}{0pt plus 5cm}void lcd\_\-init (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{lcd_8c_ac23e73124dc9fabae95671fe71d074a6}
+Function to Initialize LCD 
+\begin{DoxyCode}
+{
+        _delay_ms(1);
+
+        lcd_wr_command(0x28);                   //LCD 4-bit mode and 2 lines.
+        lcd_wr_command(0x01);
+        lcd_wr_command(0x06);
+        lcd_wr_command(0x0E);
+        lcd_wr_command(0x80);
+                
+}
+\end{DoxyCode}
+\hypertarget{lcd_8c_a48b63200c8d5c8c5231031674cbb63d6}{
+\index{lcd.c@{lcd.c}!lcd\_\-print@{lcd\_\-print}}
+\index{lcd\_\-print@{lcd\_\-print}!lcd.c@{lcd.c}}
+\subsubsection[{lcd\_\-print}]{\setlength{\rightskip}{0pt plus 5cm}void lcd\_\-print (
+\begin{DoxyParamCaption}
+\item[{char}]{row, }
+\item[{char}]{coloumn, }
+\item[{unsigned int}]{value, }
+\item[{int}]{digits}
+\end{DoxyParamCaption}
+)}}
+\label{lcd_8c_a48b63200c8d5c8c5231031674cbb63d6}
+Function To Print Any input value upto the desired digit on LCD 
+\begin{DoxyCode}
+{
+        unsigned char flag=0;
+        if(row==0||coloumn==0)
+        {
+                lcd_home();
+        }
+        else
+        {
+                lcd_cursor(row,coloumn);
+        }
+        if(digits==5 || flag==1)
+        {
+                million=value/10000+48;
+                lcd_wr_char(million);
+                flag=1;
+        }
+        if(digits==4 || flag==1)
+        {
+                temp = value/1000;
+                thousand = temp%10 + 48;
+                lcd_wr_char(thousand);
+                flag=1;
+        }
+        if(digits==3 || flag==1)
+        {
+                temp = value/100;
+                hundred = temp%10 + 48;
+                lcd_wr_char(hundred);
+                flag=1;
+        }
+        if(digits==2 || flag==1)
+        {
+                temp = value/10;
+                tens = temp%10 + 48;
+                lcd_wr_char(tens);
+                flag=1;
+        }
+        if(digits==1 || flag==1)
+        {
+                unit = value%10 + 48;
+                lcd_wr_char(unit);
+        }
+        if(digits>5)
+        {
+                lcd_wr_char('E');
+        }
+        
+}
+\end{DoxyCode}
+\hypertarget{lcd_8c_a3f8a3732239f1ff251be98da40c120e1}{
+\index{lcd.c@{lcd.c}!lcd\_\-set\_\-4bit@{lcd\_\-set\_\-4bit}}
+\index{lcd\_\-set\_\-4bit@{lcd\_\-set\_\-4bit}!lcd.c@{lcd.c}}
+\subsubsection[{lcd\_\-set\_\-4bit}]{\setlength{\rightskip}{0pt plus 5cm}void lcd\_\-set\_\-4bit (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{lcd_8c_a3f8a3732239f1ff251be98da40c120e1}
+Function to Reset LCD 
+\begin{DoxyCode}
+{
+        _delay_ms(1);
+
+        cbit(lcd_port,RS);                              //RS=0 --- Command Input
+        cbit(lcd_port,RW);                              //RW=0 --- Writing to LCD
+      
+        lcd_port = 0x30;                                //Sending 3
+        sbit(lcd_port,EN);                              //Set Enable Pin
+        _delay_ms(5);                                   //Delay
+        cbit(lcd_port,EN);                              //Clear Enable Pin
+
+        _delay_ms(1);
+
+        cbit(lcd_port,RS);                              //RS=0 --- Command Input
+        cbit(lcd_port,RW);                              //RW=0 --- Writing to LCD
+      
+        lcd_port = 0x30;                                //Sending 3
+        sbit(lcd_port,EN);                              //Set Enable Pin
+        _delay_ms(5);                                   //Delay
+        cbit(lcd_port,EN);                              //Clear Enable Pin
+
+        _delay_ms(1);
+
+        cbit(lcd_port,RS);                              //RS=0 --- Command Input
+        cbit(lcd_port,RW);                              //RW=0 --- Writing to LCD
+      
+        lcd_port = 0x30;                                //Sending 3
+        sbit(lcd_port,EN);                              //Set Enable Pin
+        _delay_ms(5);                                   //Delay
+        cbit(lcd_port,EN);                              //Clear Enable Pin
+
+        _delay_ms(1);
+
+        cbit(lcd_port,RS);                              //RS=0 --- Command Input
+        cbit(lcd_port,RW);                              //RW=0 --- Writing to LCD
+      
+        lcd_port = 0x20;                                //Sending 2 to initialise
+       LCD 4-bit mode
+        sbit(lcd_port,EN);                              //Set Enable Pin
+        _delay_ms(5);                                   //Delay
+        cbit(lcd_port,EN);                              //Clear Enable Pin
+
+        
+}
+\end{DoxyCode}
+\hypertarget{lcd_8c_a1eeb0747ef56e3dab0a64e7688b3ff65}{
+\index{lcd.c@{lcd.c}!lcd\_\-string@{lcd\_\-string}}
+\index{lcd\_\-string@{lcd\_\-string}!lcd.c@{lcd.c}}
+\subsubsection[{lcd\_\-string}]{\setlength{\rightskip}{0pt plus 5cm}void lcd\_\-string (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{str}
+\end{DoxyParamCaption}
+)}}
+\label{lcd_8c_a1eeb0747ef56e3dab0a64e7688b3ff65}
+Function to Print String on LCD 
+\begin{DoxyCode}
+{
+        while(*str != '\0')
+        {
+                lcd_wr_char(*str);
+                str++;
+        }
+}
+\end{DoxyCode}
+\hypertarget{lcd_8c_a02b47802a409ab525f2fda28140150b0}{
+\index{lcd.c@{lcd.c}!lcd\_\-wr\_\-char@{lcd\_\-wr\_\-char}}
+\index{lcd\_\-wr\_\-char@{lcd\_\-wr\_\-char}!lcd.c@{lcd.c}}
+\subsubsection[{lcd\_\-wr\_\-char}]{\setlength{\rightskip}{0pt plus 5cm}void lcd\_\-wr\_\-char (
+\begin{DoxyParamCaption}
+\item[{char}]{letter}
+\end{DoxyParamCaption}
+)}}
+\label{lcd_8c_a02b47802a409ab525f2fda28140150b0}
+Function to Write Data on LCD 
+\begin{DoxyCode}
+{
+        char temp;
+        temp = letter;
+        temp = (temp & 0xF0);
+        lcd_port &= 0x0F;
+        lcd_port |= temp;
+        sbit(lcd_port,RS);
+        cbit(lcd_port,RW);
+        sbit(lcd_port,EN);
+        _delay_ms(5);
+        cbit(lcd_port,EN);
+
+        letter = letter & 0x0F;
+        letter = letter<<4;
+        lcd_port &= 0x0F;
+        lcd_port |= letter;
+        sbit(lcd_port,RS);
+        cbit(lcd_port,RW);
+        sbit(lcd_port,EN);
+        _delay_ms(5);
+        cbit(lcd_port,EN);
+}
+\end{DoxyCode}
+\hypertarget{lcd_8c_afff7370014e73715ce0d31b4d994c916}{
+\index{lcd.c@{lcd.c}!lcd\_\-wr\_\-command@{lcd\_\-wr\_\-command}}
+\index{lcd\_\-wr\_\-command@{lcd\_\-wr\_\-command}!lcd.c@{lcd.c}}
+\subsubsection[{lcd\_\-wr\_\-command}]{\setlength{\rightskip}{0pt plus 5cm}void lcd\_\-wr\_\-command (
+\begin{DoxyParamCaption}
+\item[{unsigned char}]{cmd}
+\end{DoxyParamCaption}
+)}}
+\label{lcd_8c_afff7370014e73715ce0d31b4d994c916}
+Function to Write Command on LCD 
+\begin{DoxyCode}
+{
+        unsigned char temp;
+        temp = cmd;
+        temp = temp & 0xF0;
+        lcd_port &= 0x0F;
+        lcd_port |= temp;
+        cbit(lcd_port,RS);
+        cbit(lcd_port,RW);
+        sbit(lcd_port,EN);
+        _delay_ms(5);
+        cbit(lcd_port,EN);
+        
+        cmd = cmd & 0x0F;
+        cmd = cmd<<4;
+        lcd_port &= 0x0F;
+        lcd_port |= cmd;
+        cbit(lcd_port,RS);
+        cbit(lcd_port,RW);
+        sbit(lcd_port,EN);
+        _delay_ms(5);
+        cbit(lcd_port,EN);
+}
+\end{DoxyCode}

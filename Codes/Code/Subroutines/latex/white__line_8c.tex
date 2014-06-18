@@ -1,0 +1,1312 @@
+\hypertarget{white__line_8c}{
+\section{white\_\-line.c File Reference}
+\label{white__line_8c}\index{white\_\-line.c@{white\_\-line.c}}
+}
+{\ttfamily \#include $<$math.h$>$}\par
+{\ttfamily \#include $<$string.h$>$}\par
+{\ttfamily \#include $<$avr/io.h$>$}\par
+{\ttfamily \#include $<$avr/interrupt.h$>$}\par
+{\ttfamily \#include $<$util/delay.h$>$}\par
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structstate}{state}
+\item 
+struct \hyperlink{structdirection}{direction}
+\end{DoxyCompactItemize}
+\subsection*{Defines}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{white__line_8c_a9d4ad5467cb8a39312513dfaaf4d950a}{
+\#define {\bfseries FCPU}~11059200ul}
+\label{white__line_8c_a9d4ad5467cb8a39312513dfaaf4d950a}
+
+\item 
+\hypertarget{white__line_8c_af8903d8eea3868940c60af887473b152}{
+\#define {\bfseries RS}~0}
+\label{white__line_8c_af8903d8eea3868940c60af887473b152}
+
+\item 
+\hypertarget{white__line_8c_afc4ded33ac0ca43defcce639e965748a}{
+\#define {\bfseries RW}~1}
+\label{white__line_8c_afc4ded33ac0ca43defcce639e965748a}
+
+\item 
+\hypertarget{white__line_8c_a22e6626f2c98ed902f8ded47f6438c05}{
+\#define {\bfseries EN}~2}
+\label{white__line_8c_a22e6626f2c98ed902f8ded47f6438c05}
+
+\item 
+\hypertarget{white__line_8c_ab44cc79afa2e158e5173a42d0bdd01b0}{
+\#define {\bfseries lcd\_\-port}~PORTC}
+\label{white__line_8c_ab44cc79afa2e158e5173a42d0bdd01b0}
+
+\item 
+\hypertarget{white__line_8c_a0e1a587a6bb537fb5e9c836231291df4}{
+\#define {\bfseries sbit}(reg, bit)~reg $|$= (1$<$$<$bit)}
+\label{white__line_8c_a0e1a587a6bb537fb5e9c836231291df4}
+
+\item 
+\hypertarget{white__line_8c_aad24a3ffd9b61c778f99521f717864a9}{
+\#define {\bfseries cbit}(reg, bit)~reg \&= $\sim$(1$<$$<$bit)}
+\label{white__line_8c_aad24a3ffd9b61c778f99521f717864a9}
+
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{white__line_8c_aa849497e3ddd7fc3b339a5a65d8e1d7d}{
+typedef struct \hyperlink{structstate}{state} {\bfseries botState}}
+\label{white__line_8c_aa849497e3ddd7fc3b339a5a65d8e1d7d}
+
+\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum {\bfseries turn} \{ \par
+{\bfseries F} =  0, 
+{\bfseries L} =  1, 
+{\bfseries B} =  2, 
+{\bfseries R} =  3, 
+\par
+{\bfseries F} =  0, 
+{\bfseries L} =  1, 
+{\bfseries B} =  2, 
+{\bfseries R} =  3
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+unsigned char \hyperlink{white__line_8c_a3aedb5aa08d1a59fd4576fc4493e411d}{ADC\_\-Conversion} (unsigned char)
+\item 
+\hypertarget{white__line_8c_a8cb7183ba3f64a4c678db00589de269f}{
+void {\bfseries lcd\_\-reset\_\-4bit} ()}
+\label{white__line_8c_a8cb7183ba3f64a4c678db00589de269f}
+
+\item 
+\hypertarget{white__line_8c_ac23e73124dc9fabae95671fe71d074a6}{
+void {\bfseries lcd\_\-init} ()}
+\label{white__line_8c_ac23e73124dc9fabae95671fe71d074a6}
+
+\item 
+\hypertarget{white__line_8c_afff7370014e73715ce0d31b4d994c916}{
+void {\bfseries lcd\_\-wr\_\-command} (unsigned char)}
+\label{white__line_8c_afff7370014e73715ce0d31b4d994c916}
+
+\item 
+\hypertarget{white__line_8c_a02b47802a409ab525f2fda28140150b0}{
+void {\bfseries lcd\_\-wr\_\-char} (char)}
+\label{white__line_8c_a02b47802a409ab525f2fda28140150b0}
+
+\item 
+\hypertarget{white__line_8c_a60675105b93bba6762aaab88d732365a}{
+void {\bfseries lcd\_\-home} ()}
+\label{white__line_8c_a60675105b93bba6762aaab88d732365a}
+
+\item 
+\hypertarget{white__line_8c_ad8006d544921c9533806fdc898c75112}{
+void {\bfseries lcd\_\-cursor} (char, char)}
+\label{white__line_8c_ad8006d544921c9533806fdc898c75112}
+
+\item 
+\hypertarget{white__line_8c_a48b63200c8d5c8c5231031674cbb63d6}{
+void {\bfseries lcd\_\-print} (char, char, unsigned int, int)}
+\label{white__line_8c_a48b63200c8d5c8c5231031674cbb63d6}
+
+\item 
+\hypertarget{white__line_8c_a1eeb0747ef56e3dab0a64e7688b3ff65}{
+void {\bfseries lcd\_\-string} (char $\ast$)}
+\label{white__line_8c_a1eeb0747ef56e3dab0a64e7688b3ff65}
+
+\item 
+\hypertarget{white__line_8c_a3f8a3732239f1ff251be98da40c120e1}{
+void {\bfseries lcd\_\-set\_\-4bit} ()}
+\label{white__line_8c_a3f8a3732239f1ff251be98da40c120e1}
+
+\item 
+\hypertarget{white__line_8c_a1f99ad79b523e88de1333429b18ecfe9}{
+void {\bfseries LCD\_\-port\_\-config} (void)}
+\label{white__line_8c_a1f99ad79b523e88de1333429b18ecfe9}
+
+\item 
+\hypertarget{white__line_8c_a27f01c5d49b89503a6d1380f151b19af}{
+void {\bfseries adc\_\-pin\_\-config} (void)}
+\label{white__line_8c_a27f01c5d49b89503a6d1380f151b19af}
+
+\item 
+void \hyperlink{white__line_8c_ae20e0ac384c729be97c963cb470456a9}{left\_\-encoder\_\-pin\_\-config} (void)
+\item 
+void \hyperlink{white__line_8c_a0db68d18b578ab9e12bc1d80915ef0d7}{right\_\-encoder\_\-pin\_\-config} (void)
+\item 
+\hypertarget{white__line_8c_aff7831bb17c1206ab082415ee14e21b1}{
+void {\bfseries left\_\-position\_\-encoder\_\-interrupt\_\-init} (void)}
+\label{white__line_8c_aff7831bb17c1206ab082415ee14e21b1}
+
+\item 
+\hypertarget{white__line_8c_a1333f7476858c2d76f7d725dfb0e7d88}{
+void {\bfseries right\_\-position\_\-encoder\_\-interrupt\_\-init} (void)}
+\label{white__line_8c_a1333f7476858c2d76f7d725dfb0e7d88}
+
+\item 
+\hyperlink{white__line_8c_a6225c50fbafa01589351ed487223aacb}{ISR} (INT5\_\-vect)
+\item 
+\hyperlink{white__line_8c_a98a290ada01eb27fd2ff4564371566e5}{ISR} (INT4\_\-vect)
+\item 
+\hypertarget{white__line_8c_a16819c9ada3f08c407de422ec05e802f}{
+void {\bfseries motion\_\-pin\_\-config} ()}
+\label{white__line_8c_a16819c9ada3f08c407de422ec05e802f}
+
+\item 
+\hypertarget{white__line_8c_a5c2ba800834495bb295891490cb1c760}{
+void {\bfseries port\_\-init} ()}
+\label{white__line_8c_a5c2ba800834495bb295891490cb1c760}
+
+\item 
+\hypertarget{white__line_8c_a1e942fcd91f79d49e4ddb8d7e9d3ef95}{
+void {\bfseries adc\_\-init} ()}
+\label{white__line_8c_a1e942fcd91f79d49e4ddb8d7e9d3ef95}
+
+\item 
+void \hyperlink{white__line_8c_a578f7cc9b705ce549aa856c927b102e8}{timer5\_\-init} ()
+\item 
+void \hyperlink{white__line_8c_a10cb8a1450bfb05cd9c72ad09ce7f2fe}{motion\_\-set} (unsigned char Direction)
+\item 
+void \hyperlink{white__line_8c_a0b5f946b51550fe862b59f91ae5fe9f9}{forward} (void)
+\item 
+void \hyperlink{white__line_8c_a3344ca821ab12c0ceaa9a9c03b473462}{back} (void)
+\item 
+void \hyperlink{white__line_8c_af58faf62f4e3606140250fb9ed314db5}{left} (void)
+\item 
+void \hyperlink{white__line_8c_ae56b9a694abd24fe3e7af591fc50b748}{right} (void)
+\item 
+void \hyperlink{white__line_8c_a9f675d6f341de272935fc3a4bd7683ce}{soft\_\-left} (void)
+\item 
+void \hyperlink{white__line_8c_a86d205d334c3761364b7db60cb0257b6}{soft\_\-right} (void)
+\item 
+void \hyperlink{white__line_8c_a84253b553e3fc3d181945f643e7aa82d}{soft\_\-left\_\-2} (void)
+\item 
+\hypertarget{white__line_8c_a6ce417f3e8c28824215c61637845f18c}{
+void {\bfseries soft\_\-right\_\-2} (void)}
+\label{white__line_8c_a6ce417f3e8c28824215c61637845f18c}
+
+\item 
+void \hyperlink{white__line_8c_aacf6bf8e121fea8b0a92d7197b73fe27}{stop} (void)
+\item 
+void \hyperlink{white__line_8c_ae79e92df10e04334f214055aa5b8c658}{angle\_\-rotate} (unsigned int Degrees)
+\item 
+void \hyperlink{white__line_8c_afc027345bdb5eb901ff0d7aa5ffa7306}{linear\_\-distance\_\-mm} (unsigned int DistanceInMM)
+\item 
+void \hyperlink{white__line_8c_a3a0711f34af615c274e67a580696f9ad}{forward\_\-mm} (unsigned int DistanceInMM)
+\item 
+void \hyperlink{white__line_8c_a211524abdbae5dd0a77807b843ec60c7}{back\_\-mm} (unsigned int DistanceInMM)
+\item 
+void \hyperlink{white__line_8c_afb8f5ede968f85a107d7bd0e5017634f}{left\_\-degrees} (unsigned int Degrees)
+\item 
+void \hyperlink{white__line_8c_a8cf9e2dc043ac2c788c78e6dd407e6e8}{right\_\-degrees} (unsigned int Degrees)
+\item 
+void \hyperlink{white__line_8c_a1013e84d64ce4284bdd33542678b36ba}{soft\_\-left\_\-degrees} (unsigned int Degrees)
+\item 
+void \hyperlink{white__line_8c_a2c63b1157eee42d68b242cd9a37eec98}{soft\_\-right\_\-degrees} (unsigned int Degrees)
+\item 
+void \hyperlink{white__line_8c_a3bc73fd02a38e7bd23dd8ecd87601c51}{soft\_\-left\_\-2\_\-degrees} (unsigned int Degrees)
+\item 
+void \hyperlink{white__line_8c_ac5f0c8df1383322f922faf6a4ea30d57}{soft\_\-right\_\-2\_\-degrees} (unsigned int Degrees)
+\item 
+\hypertarget{white__line_8c_af72dff633f63f520edca6836b2811674}{
+void {\bfseries print\_\-sensor} (char row, char column, unsigned char channel)}
+\label{white__line_8c_af72dff633f63f520edca6836b2811674}
+
+\item 
+void \hyperlink{white__line_8c_a0c9f844d5abacdeb76ec96c2ed3b4bc9}{velocity} (unsigned char left\_\-motion, unsigned char right\_\-motion)
+\item 
+unsigned int \hyperlink{white__line_8c_a2a3c14516d859b716d739bcfe41fa52f}{Sharp\_\-GP2D12\_\-estimation} (unsigned char adc\_\-reading)
+\item 
+\hypertarget{white__line_8c_aa5800db0617c08504db3521d46fd0e1f}{
+unsigned int {\bfseries Sharp\_\-GP2D120\_\-estimation} (unsigned char adc\_\-reading)}
+\label{white__line_8c_aa5800db0617c08504db3521d46fd0e1f}
+
+\item 
+void \hyperlink{white__line_8c_a2e22d5e270a39ffcf36b38e02cc7b033}{init\_\-devices} (void)
+\item 
+void \hyperlink{white__line_8c_a4dd394839cc1e77986c84b3a3679bcd8}{buzzer\_\-on} (void)
+\item 
+void \hyperlink{white__line_8c_a93d07c81691fec7a85ea85117d6eca4f}{buzzer\_\-off} (void)
+\item 
+\hypertarget{white__line_8c_abbbf5055286d09a73b87f57f71dfd0b9}{
+void {\bfseries uart0\_\-init} (void)}
+\label{white__line_8c_abbbf5055286d09a73b87f57f71dfd0b9}
+
+\item 
+\hyperlink{white__line_8c_ab5f8e79f6ffa3be348924e573e8dcfd1}{SIGNAL} (SIG\_\-USART0\_\-RECV)
+\item 
+void \hyperlink{white__line_8c_ab628985837d4ac2c17c0819653890ab4}{lineFollow} (\hyperlink{dijkstra_8c_a27e2cc779821c6d574530ff9a527373c}{turn} t)
+\item 
+int \hyperlink{white__line_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}{main} ()
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{white__line_8c_a7478dc1bbf98fafa771a4e2c1a27f70b}{
+unsigned char {\bfseries ADC\_\-Value}}
+\label{white__line_8c_a7478dc1bbf98fafa771a4e2c1a27f70b}
+
+\item 
+\hypertarget{white__line_8c_aadf352aa51bd8e0d182df6fbff6dd0e3}{
+unsigned char {\bfseries sharp}}
+\label{white__line_8c_aadf352aa51bd8e0d182df6fbff6dd0e3}
+
+\item 
+\hypertarget{white__line_8c_aac6f9860fc598f5c02f4d9e4e8e6fea5}{
+unsigned char {\bfseries sharp2}}
+\label{white__line_8c_aac6f9860fc598f5c02f4d9e4e8e6fea5}
+
+\item 
+\hypertarget{white__line_8c_a3e64d41b31c29641d83fa0c2be1e7826}{
+unsigned char {\bfseries sharp3}}
+\label{white__line_8c_a3e64d41b31c29641d83fa0c2be1e7826}
+
+\item 
+\hypertarget{white__line_8c_ab23c867e47c84ba2150303e480476510}{
+unsigned char {\bfseries distance}}
+\label{white__line_8c_ab23c867e47c84ba2150303e480476510}
+
+\item 
+\hypertarget{white__line_8c_aaecc4c4294fc13637300725082ff528b}{
+unsigned char {\bfseries adc\_\-reading}}
+\label{white__line_8c_aaecc4c4294fc13637300725082ff528b}
+
+\item 
+\hypertarget{white__line_8c_a2a5a27690c40c531d0a8385dc4f66a95}{
+unsigned int {\bfseries value}}
+\label{white__line_8c_a2a5a27690c40c531d0a8385dc4f66a95}
+
+\item 
+\hypertarget{white__line_8c_a8c913e92d6de5e954e9e5c5615782e07}{
+unsigned int {\bfseries value2}}
+\label{white__line_8c_a8c913e92d6de5e954e9e5c5615782e07}
+
+\item 
+\hypertarget{white__line_8c_a967136044bc70a3d07c50aaf016d590d}{
+unsigned int {\bfseries value3}}
+\label{white__line_8c_a967136044bc70a3d07c50aaf016d590d}
+
+\item 
+\hypertarget{white__line_8c_a33ca40b3d671a3985f4ba853625d2e7e}{
+float {\bfseries BATT\_\-Voltage}}
+\label{white__line_8c_a33ca40b3d671a3985f4ba853625d2e7e}
+
+\item 
+\hypertarget{white__line_8c_acffffa4d022709dd8956ba5ac3828ffb}{
+float {\bfseries BATT\_\-V}}
+\label{white__line_8c_acffffa4d022709dd8956ba5ac3828ffb}
+
+\item 
+unsigned int \hyperlink{white__line_8c_a13006074294a071b6c7a268a498f77f7}{temp}
+\item 
+\hypertarget{white__line_8c_a09cef70e6322053ea80ae603446346c5}{
+unsigned int {\bfseries unit}}
+\label{white__line_8c_a09cef70e6322053ea80ae603446346c5}
+
+\item 
+\hypertarget{white__line_8c_ab84b805352ca4b7ecfc9601ddab528bc}{
+unsigned int {\bfseries tens}}
+\label{white__line_8c_ab84b805352ca4b7ecfc9601ddab528bc}
+
+\item 
+\hypertarget{white__line_8c_a913b0b4b2d4fd1ccc45534741d386cc8}{
+unsigned int {\bfseries hundred}}
+\label{white__line_8c_a913b0b4b2d4fd1ccc45534741d386cc8}
+
+\item 
+\hypertarget{white__line_8c_aa790b5f78a8f90d800d64c46c3e40205}{
+unsigned int {\bfseries thousand}}
+\label{white__line_8c_aa790b5f78a8f90d800d64c46c3e40205}
+
+\item 
+\hypertarget{white__line_8c_ae98244497f01cb51c50a6a1d18642b71}{
+unsigned int {\bfseries million}}
+\label{white__line_8c_ae98244497f01cb51c50a6a1d18642b71}
+
+\item 
+\hypertarget{white__line_8c_ad4d883fb592328b3a01dcd7c28b5a0ae}{
+unsigned long int {\bfseries ShaftCountLeft} = 0}
+\label{white__line_8c_ad4d883fb592328b3a01dcd7c28b5a0ae}
+
+\item 
+\hypertarget{white__line_8c_a397e402cf787d59092e911b079f08b12}{
+unsigned long int {\bfseries ShaftCountRight} = 0}
+\label{white__line_8c_a397e402cf787d59092e911b079f08b12}
+
+\item 
+\hypertarget{white__line_8c_a9719b725d5dde7ae77cf440b08ab2e21}{
+unsigned int {\bfseries Degrees}}
+\label{white__line_8c_a9719b725d5dde7ae77cf440b08ab2e21}
+
+\item 
+\hypertarget{white__line_8c_a510d73ef73ed67f76e6d6b13c86d093d}{
+unsigned char {\bfseries Front\_\-Sharp\_\-Sensor} = 0}
+\label{white__line_8c_a510d73ef73ed67f76e6d6b13c86d093d}
+
+\item 
+\hypertarget{white__line_8c_a350f871cfbab83d0c434b6c6301e1cf7}{
+unsigned char {\bfseries Front\_\-IR\_\-Sensor} = 0}
+\label{white__line_8c_a350f871cfbab83d0c434b6c6301e1cf7}
+
+\item 
+\hypertarget{white__line_8c_acb559820d9ca11295b4500f179ef6392}{
+int {\bfseries i}}
+\label{white__line_8c_acb559820d9ca11295b4500f179ef6392}
+
+\item 
+\hypertarget{white__line_8c_ad43c3812e6d13e0518d9f8b8f463ffcf}{
+int {\bfseries count}}
+\label{white__line_8c_ad43c3812e6d13e0518d9f8b8f463ffcf}
+
+\item 
+\hypertarget{white__line_8c_af74193fe1f3f014e7283a414b41270bb}{
+int {\bfseries curTurningLane}}
+\label{white__line_8c_af74193fe1f3f014e7283a414b41270bb}
+
+\item 
+\hypertarget{white__line_8c_aa728c7525a9cca1392c83c355b218230}{
+int {\bfseries skip\_\-lanes} = 1}
+\label{white__line_8c_aa728c7525a9cca1392c83c355b218230}
+
+\item 
+\hypertarget{white__line_8c_a1df1a9c8ecb41f6caf016c09b97793bf}{
+int {\bfseries right\_\-skip} = 0}
+\label{white__line_8c_a1df1a9c8ecb41f6caf016c09b97793bf}
+
+\item 
+\hypertarget{white__line_8c_ae9ba364c0145d7a82155e034f355635f}{
+int {\bfseries move} = 0}
+\label{white__line_8c_ae9ba364c0145d7a82155e034f355635f}
+
+\item 
+\hypertarget{white__line_8c_a2e839d402befe03988451b3a1f6f80cf}{
+int {\bfseries vel} = 130}
+\label{white__line_8c_a2e839d402befe03988451b3a1f6f80cf}
+
+\item 
+\hypertarget{white__line_8c_a617a47c70795bcff659815ad0efd2266}{
+int {\bfseries counter} = 0}
+\label{white__line_8c_a617a47c70795bcff659815ad0efd2266}
+
+\item 
+\hypertarget{white__line_8c_ad786e15caee8f1c290e07295d0ad0516}{
+int {\bfseries prevState} = 0}
+\label{white__line_8c_ad786e15caee8f1c290e07295d0ad0516}
+
+\item 
+\hypertarget{white__line_8c_a4f9ad46c2c70b0557deaa35be88d0524}{
+\hyperlink{dijkstra_8c_a27e2cc779821c6d574530ff9a527373c}{turn} {\bfseries t} \mbox{[}10\mbox{]}}
+\label{white__line_8c_a4f9ad46c2c70b0557deaa35be88d0524}
+
+\item 
+\hypertarget{white__line_8c_a4a682890bb9d2a9e6ac5151694cc96ea}{
+\hyperlink{dijkstra_8c_a27e2cc779821c6d574530ff9a527373c}{turn} {\bfseries turningLane} \mbox{[}10\mbox{]}}
+\label{white__line_8c_a4a682890bb9d2a9e6ac5151694cc96ea}
+
+\item 
+\hypertarget{white__line_8c_ad47c17219d68e9829fa719163bc9d365}{
+\hyperlink{dijkstra_8c_a27e2cc779821c6d574530ff9a527373c}{turn} {\bfseries skipLanes} \mbox{[}10\mbox{]}}
+\label{white__line_8c_ad47c17219d68e9829fa719163bc9d365}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{DoxyAuthor}{Author}
+sushil kumar meena (\href{mailto:sushilm.iitb@gmail.com}{\tt sushilm.iitb@gmail.com}) 
+
+mudit malpani (\href{mailto:cooldudemd.malpani@gmail.com}{\tt cooldudemd.malpani@gmail.com}) 
+
+palak dalal (\href{mailto:palak.dalal@gmail.com}{\tt palak.dalal@gmail.com}) 
+
+hemant noval (\href{mailto:novalhemant@gmail.com}{\tt novalhemant@gmail.com})
+\end{DoxyAuthor}
+Description: This file contains white line following code. This file is to be compiled and fed to the bot. It also contains zigbee communication module. 
+
+\subsection{Function Documentation}
+\hypertarget{white__line_8c_a3aedb5aa08d1a59fd4576fc4493e411d}{
+\index{white\_\-line.c@{white\_\-line.c}!ADC\_\-Conversion@{ADC\_\-Conversion}}
+\index{ADC\_\-Conversion@{ADC\_\-Conversion}!white_line.c@{white\_\-line.c}}
+\subsubsection[{ADC\_\-Conversion}]{\setlength{\rightskip}{0pt plus 5cm}unsigned char ADC\_\-Conversion (
+\begin{DoxyParamCaption}
+\item[{unsigned char}]{Ch}
+\end{DoxyParamCaption}
+)}}
+\label{white__line_8c_a3aedb5aa08d1a59fd4576fc4493e411d}
+Function to do ADC conversion 
+\begin{DoxyCode}
+                                              {
+
+        unsigned char a;
+
+        if(Ch>7){
+                ADCSRB = 0x08;
+        }
+
+        Ch = Ch & 0x07;
+        ADMUX = 0x20 | Ch;
+        ADCSRA = ADCSRA | 0x40;
+
+        while((ADCSRA & 0x10) == 0);
+
+        a = ADCH;
+        ADCSRB = 0x00;
+        return a;
+}
+\end{DoxyCode}
+\hypertarget{white__line_8c_ae79e92df10e04334f214055aa5b8c658}{
+\index{white\_\-line.c@{white\_\-line.c}!angle\_\-rotate@{angle\_\-rotate}}
+\index{angle\_\-rotate@{angle\_\-rotate}!white_line.c@{white\_\-line.c}}
+\subsubsection[{angle\_\-rotate}]{\setlength{\rightskip}{0pt plus 5cm}void angle\_\-rotate (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{Degrees}
+\end{DoxyParamCaption}
+)}}
+\label{white__line_8c_ae79e92df10e04334f214055aa5b8c658}
+Function used for turning robot by specified degrees args: Degrees Action: move the bot by given angle 
+\begin{DoxyCode}
+{
+ float ReqdShaftCount = 0;
+ unsigned long int ReqdShaftCountInt = 0;
+
+ ReqdShaftCount = (float) Degrees/ 4.090; // division by resolution to get shaft 
+      count
+ ReqdShaftCountInt = (unsigned int) ReqdShaftCount;
+ ShaftCountRight = 0; 
+ ShaftCountLeft = 0; 
+
+ while (1)
+ {
+        lcd_print(1, 1, ShaftCountLeft, 3);
+        lcd_print(1, 5, ShaftCountRight, 3);
+        lcd_print(1, 9, ReqdShaftCountInt, 3);
+  if((ShaftCountRight >= ReqdShaftCountInt) | (ShaftCountLeft >= ReqdShaftCountIn
+      t))
+  break;
+ }
+ stop(); //Stop action
+}
+\end{DoxyCode}
+\hypertarget{white__line_8c_a3344ca821ab12c0ceaa9a9c03b473462}{
+\index{white\_\-line.c@{white\_\-line.c}!back@{back}}
+\index{back@{back}!white_line.c@{white\_\-line.c}}
+\subsubsection[{back}]{\setlength{\rightskip}{0pt plus 5cm}void back (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}
+\label{white__line_8c_a3344ca821ab12c0ceaa9a9c03b473462}
+Move both wheel backward 
+\begin{DoxyCode}
+{
+  motion_set(0x09);
+}
+\end{DoxyCode}
+\hypertarget{white__line_8c_a211524abdbae5dd0a77807b843ec60c7}{
+\index{white\_\-line.c@{white\_\-line.c}!back\_\-mm@{back\_\-mm}}
+\index{back\_\-mm@{back\_\-mm}!white_line.c@{white\_\-line.c}}
+\subsubsection[{back\_\-mm}]{\setlength{\rightskip}{0pt plus 5cm}void back\_\-mm (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{DistanceInMM}
+\end{DoxyParamCaption}
+)}}
+\label{white__line_8c_a211524abdbae5dd0a77807b843ec60c7}
+Function to move bot backward by DistanceInMM 
+\begin{DoxyCode}
+{
+ back();
+ linear_distance_mm(DistanceInMM);
+}
+\end{DoxyCode}
+\hypertarget{white__line_8c_a93d07c81691fec7a85ea85117d6eca4f}{
+\index{white\_\-line.c@{white\_\-line.c}!buzzer\_\-off@{buzzer\_\-off}}
+\index{buzzer\_\-off@{buzzer\_\-off}!white_line.c@{white\_\-line.c}}
+\subsubsection[{buzzer\_\-off}]{\setlength{\rightskip}{0pt plus 5cm}void buzzer\_\-off (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}
+\label{white__line_8c_a93d07c81691fec7a85ea85117d6eca4f}
+Function to make buzzer off 
+\begin{DoxyCode}
+{
+ unsigned char port_restore = 0;
+ port_restore = PINC;
+ port_restore = port_restore & 0xF7;
+ PORTC = port_restore;
+}
+\end{DoxyCode}
+\hypertarget{white__line_8c_a4dd394839cc1e77986c84b3a3679bcd8}{
+\index{white\_\-line.c@{white\_\-line.c}!buzzer\_\-on@{buzzer\_\-on}}
+\index{buzzer\_\-on@{buzzer\_\-on}!white_line.c@{white\_\-line.c}}
+\subsubsection[{buzzer\_\-on}]{\setlength{\rightskip}{0pt plus 5cm}void buzzer\_\-on (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}
+\label{white__line_8c_a4dd394839cc1e77986c84b3a3679bcd8}
+Function to make buzzer on 
+\begin{DoxyCode}
+{
+ unsigned char port_restore = 0;
+ port_restore = PINC;
+ port_restore = port_restore | 0x08;
+ PORTC = port_restore;
+}
+\end{DoxyCode}
+\hypertarget{white__line_8c_a0b5f946b51550fe862b59f91ae5fe9f9}{
+\index{white\_\-line.c@{white\_\-line.c}!forward@{forward}}
+\index{forward@{forward}!white_line.c@{white\_\-line.c}}
+\subsubsection[{forward}]{\setlength{\rightskip}{0pt plus 5cm}void forward (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}
+\label{white__line_8c_a0b5f946b51550fe862b59f91ae5fe9f9}
+Move both wheel forward 
+\begin{DoxyCode}
+{
+  motion_set(0x06);
+}
+\end{DoxyCode}
+\hypertarget{white__line_8c_a3a0711f34af615c274e67a580696f9ad}{
+\index{white\_\-line.c@{white\_\-line.c}!forward\_\-mm@{forward\_\-mm}}
+\index{forward\_\-mm@{forward\_\-mm}!white_line.c@{white\_\-line.c}}
+\subsubsection[{forward\_\-mm}]{\setlength{\rightskip}{0pt plus 5cm}void forward\_\-mm (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{DistanceInMM}
+\end{DoxyParamCaption}
+)}}
+\label{white__line_8c_a3a0711f34af615c274e67a580696f9ad}
+Function to move bot by DistanceInMM 
+\begin{DoxyCode}
+{
+ forward();
+ linear_distance_mm(DistanceInMM);
+}
+\end{DoxyCode}
+\hypertarget{white__line_8c_a2e22d5e270a39ffcf36b38e02cc7b033}{
+\index{white\_\-line.c@{white\_\-line.c}!init\_\-devices@{init\_\-devices}}
+\index{init\_\-devices@{init\_\-devices}!white_line.c@{white\_\-line.c}}
+\subsubsection[{init\_\-devices}]{\setlength{\rightskip}{0pt plus 5cm}void init\_\-devices (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}
+\label{white__line_8c_a2e22d5e270a39ffcf36b38e02cc7b033}
+Init the devides 
+\begin{DoxyCode}
+                       {
+
+cli(); //disable all interrupts
+        port_init();
+        left_position_encoder_interrupt_init();
+        right_position_encoder_interrupt_init();
+        adc_init();
+        timer5_init();
+sei(); //re-enable interrupts
+
+}
+\end{DoxyCode}
+\hypertarget{white__line_8c_a98a290ada01eb27fd2ff4564371566e5}{
+\index{white\_\-line.c@{white\_\-line.c}!ISR@{ISR}}
+\index{ISR@{ISR}!white_line.c@{white\_\-line.c}}
+\subsubsection[{ISR}]{\setlength{\rightskip}{0pt plus 5cm}ISR (
+\begin{DoxyParamCaption}
+\item[{INT4\_\-vect}]{}
+\end{DoxyParamCaption}
+)}}
+\label{white__line_8c_a98a290ada01eb27fd2ff4564371566e5}
+SR for left position encoder 
+\begin{DoxyCode}
+{
+ ShaftCountLeft++;  //increment left shaft position count
+}
+\end{DoxyCode}
+\hypertarget{white__line_8c_a6225c50fbafa01589351ed487223aacb}{
+\index{white\_\-line.c@{white\_\-line.c}!ISR@{ISR}}
+\index{ISR@{ISR}!white_line.c@{white\_\-line.c}}
+\subsubsection[{ISR}]{\setlength{\rightskip}{0pt plus 5cm}ISR (
+\begin{DoxyParamCaption}
+\item[{INT5\_\-vect}]{}
+\end{DoxyParamCaption}
+)}}
+\label{white__line_8c_a6225c50fbafa01589351ed487223aacb}
+ISR for right position encoder 
+\begin{DoxyCode}
+{
+ ShaftCountRight++;  //increment right shaft position count
+}
+\end{DoxyCode}
+\hypertarget{white__line_8c_af58faf62f4e3606140250fb9ed314db5}{
+\index{white\_\-line.c@{white\_\-line.c}!left@{left}}
+\index{left@{left}!white_line.c@{white\_\-line.c}}
+\subsubsection[{left}]{\setlength{\rightskip}{0pt plus 5cm}void left (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}
+\label{white__line_8c_af58faf62f4e3606140250fb9ed314db5}
+Move the bot to left 
+\begin{DoxyCode}
+{
+  motion_set(0x05);
+}
+\end{DoxyCode}
+\hypertarget{white__line_8c_afb8f5ede968f85a107d7bd0e5017634f}{
+\index{white\_\-line.c@{white\_\-line.c}!left\_\-degrees@{left\_\-degrees}}
+\index{left\_\-degrees@{left\_\-degrees}!white_line.c@{white\_\-line.c}}
+\subsubsection[{left\_\-degrees}]{\setlength{\rightskip}{0pt plus 5cm}void left\_\-degrees (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{Degrees}
+\end{DoxyParamCaption}
+)}}
+\label{white__line_8c_afb8f5ede968f85a107d7bd0e5017634f}
+Function to move the bot left by given Degrees 
+\begin{DoxyCode}
+{
+// 88 pulses for 360 degrees rotation 4.090 degrees per count
+ left(); //Turn left
+ angle_rotate(Degrees);
+}
+\end{DoxyCode}
+\hypertarget{white__line_8c_ae20e0ac384c729be97c963cb470456a9}{
+\index{white\_\-line.c@{white\_\-line.c}!left\_\-encoder\_\-pin\_\-config@{left\_\-encoder\_\-pin\_\-config}}
+\index{left\_\-encoder\_\-pin\_\-config@{left\_\-encoder\_\-pin\_\-config}!white_line.c@{white\_\-line.c}}
+\subsubsection[{left\_\-encoder\_\-pin\_\-config}]{\setlength{\rightskip}{0pt plus 5cm}void left\_\-encoder\_\-pin\_\-config (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}
+\label{white__line_8c_ae20e0ac384c729be97c963cb470456a9}
+Function to configure INT4 (PORTE 4) pin as input for the left position encoder 
+\begin{DoxyCode}
+{
+ DDRE  = DDRE & 0xEF;  //Set the direction of the PORTE 4 pin as input
+ PORTE = PORTE | 0x10; //Enable internal pullup for PORTE 4 pin
+}
+\end{DoxyCode}
+\hypertarget{white__line_8c_afc027345bdb5eb901ff0d7aa5ffa7306}{
+\index{white\_\-line.c@{white\_\-line.c}!linear\_\-distance\_\-mm@{linear\_\-distance\_\-mm}}
+\index{linear\_\-distance\_\-mm@{linear\_\-distance\_\-mm}!white_line.c@{white\_\-line.c}}
+\subsubsection[{linear\_\-distance\_\-mm}]{\setlength{\rightskip}{0pt plus 5cm}void linear\_\-distance\_\-mm (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{DistanceInMM}
+\end{DoxyParamCaption}
+)}}
+\label{white__line_8c_afc027345bdb5eb901ff0d7aa5ffa7306}
+Function used for moving robot forward by specified distance args: DistanceInMM Action: Moves the bot by given distance 
+\begin{DoxyCode}
+{
+ float ReqdShaftCount = 0;
+ unsigned long int ReqdShaftCountInt = 0;
+
+ ReqdShaftCount = DistanceInMM / 5.338; // division by resolution to get shaft co
+      unt
+ ReqdShaftCountInt = (unsigned long int) ReqdShaftCount;
+  
+ ShaftCountRight = 0;
+ while(1)
+ {
+        lcd_print(1, 1, ShaftCountLeft, 3);
+        lcd_print(1, 5, ShaftCountRight, 3);
+        lcd_print(1, 9, ReqdShaftCountInt, 3);
+  if(ShaftCountRight > ReqdShaftCountInt)
+  {
+        break;
+  }
+ } 
+ stop(); //Stop action
+}
+\end{DoxyCode}
+\hypertarget{white__line_8c_ab628985837d4ac2c17c0819653890ab4}{
+\index{white\_\-line.c@{white\_\-line.c}!lineFollow@{lineFollow}}
+\index{lineFollow@{lineFollow}!white_line.c@{white\_\-line.c}}
+\subsubsection[{lineFollow}]{\setlength{\rightskip}{0pt plus 5cm}void lineFollow (
+\begin{DoxyParamCaption}
+\item[{{\bf turn}}]{t}
+\end{DoxyParamCaption}
+)}}
+\label{white__line_8c_ab628985837d4ac2c17c0819653890ab4}
+The function which is called each time when the bot wants to follow a straight line. It reads the values of the various sennsors like sharp and IR sensor ( for sensing things in front of it to avoid collision), and also the values of the three light sensors used in line following. If the bot sees anything in front of it stops until the thing moves out of its way. If it deviates a littlebit left while following a line it shifts right and vice versa.
+
+It also maintains a previous state which is used in the recovery system in case all the three sensors are on black. It will remember the last time where it came from and will take the actin which it took that time to come to the white line in case it comes completely on the black.
+
+When it comes to a junction that is at the big white sqaure ,all its sensors are on white so it will just move straight until atleast one sensor comes on the black. Also it looks at the three values here : 1. Direction -\/$>$ IN which direction it has to go after this junction i.e left, right or forward. 2. TurningLanes -\/$>$ Before turning how many junctions it has to skip since it has to follow the lane system and also all raods have different number of lanes. 3. SkipLanes -\/$>$ After turning how many junctions it has to skip so as to leave the entire junction and enter the actual road. 
+\begin{DoxyCode}
+{
+
+        unsigned char left_line, centre_line, right_line;
+
+// For adaptive cruise control
+        Front_Sharp_Sensor = ADC_Conversion(11);
+        Front_IR_Sensor = ADC_Conversion(6);
+        //Get sensor values for white line
+        left_line = ADC_Conversion(3);
+        centre_line = ADC_Conversion(2);
+        right_line = ADC_Conversion(1);
+
+        //output them on lcd
+        lcd_print(1, 1, left_line, 3);
+        lcd_print(1, 5, centre_line, 3);
+        lcd_print(1, 9, curTurningLane, 3);
+        lcd_print(2, 1, count, 3);
+        lcd_print(2, 5, t, 3);
+        lcd_print(2, 9, skip_lanes, 3);
+                
+                // if detects something in front of it then it will stop
+        if(Front_Sharp_Sensor>0x82 || Front_IR_Sensor<0xF0){
+                //flag2=1;
+                stop();
+                buzzer_on();                    
+        }
+                        
+        else if (centre_line > 0x10 && left_line > 0x18 && right_line < 0x18) {
+                prevState=1;
+                forward();velocity(vel, vel/2);buzzer_off(); //move a little righ
+      t
+        }
+        else if (centre_line > 0x10 && right_line > 0x18 && left_line < 0x18) {
+                prevState=2;
+                forward();velocity(vel/2,  vel); buzzer_off();// move a little le
+      ft
+        }
+        else if (centre_line > 0x10 && right_line > 0x18 && left_line > 0x18) {
+                forward();velocity(0,0);buzzer_off(); //stop, got lost
+                if(prevState==1)// move based on previous state
+                {
+                forward();
+                velocity( vel, vel/2);
+                }
+                else if(prevState==2){
+                forward();velocity(vel/2, vel);
+                }
+        }
+        else if (centre_line < 0x10 && right_line < 0x10 && left_line < 0x10) {
+                prevState=0;
+                stop();
+                _delay_ms(1000);
+                forward();
+                        // stop, intersection detected!
+                        count++; // for counting lanes, i have got one lane
+                        
+                lcd_print(1, 5, centre_line, 3);
+                lcd_print(1, 9, curTurningLane, 3);
+                lcd_print(2, 1, count, 3);
+                        lcd_print(2, 5, t, 3);
+                        lcd_print(2, 9, skip_lanes, 3);
+                        //_delay_ms(1000);
+                        if(count==curTurningLane && right_skip==0) {
+                        // if this is the right lane where we have to turn (or mo
+      ve ahead)    
+                                if(t==L)
+                                {
+                                // skip past the junction by just moving straight
+      
+                                while(centre_line < 0x10 && right_line < 0x10 && 
+      left_line < 0x10){
+                                                //left_line = ADC_Conversion(3);
+                                                centre_line = ADC_Conversion(2);
+                                                right_line = ADC_Conversion(1);
+                                                lcd_print(1, 1, left_line, 3);
+                                        lcd_print(1, 5, centre_line, 3);
+                                        lcd_print(1, 9, curTurningLane, 3);
+                                                lcd_print(2, 1, count, 3);
+                                                lcd_print(2, 5, t, 3);
+                                                lcd_print(2, 9, skip_lanes, 3);
+                                                forward();
+                                                velocity(vel,vel);                              
+                                }
+                                //linear_distance_mm(10);
+                                left_degrees(90);// take a hard left turn
+                                }
+                                else if(t==R)
+                                {
+                                
+                                        right_skip = 1;
+                                        while(centre_line < 0x10 && right_line < 
+      0x10 && left_line < 0x10){
+                                                left_line = ADC_Conversion(3);
+                                                centre_line = ADC_Conversion(2);
+                                                right_line = ADC_Conversion(1);
+                                                //lcd_print(1, 1, left_line, 3);
+                                        lcd_print(1, 5, centre_line, 3);
+                                        lcd_print(1, 9, curTurningLane, 3);
+                                                lcd_print(2, 1, count, 3);
+                                        lcd_print(2, 5, t, 3);
+                                        lcd_print(2, 9, skip_lanes, 3); 
+                                                forward();
+                                                velocity(vel,vel);
+                                        }
+                                //linear_distance_mm(15);
+                                        right_degrees(90);
+                                        count=0;
+                                        // after turning right it has to skip som
+      e lanes which are part of that junction only 
+                                        curTurningLane=skip_lanes;
+                                        while(1){
+                                        if(count==curTurningLane) {
+                                                right_skip = 0;
+                                                break;
+                                        }
+                                        lineFollow(F);
+                                        }
+                                }
+                                else if(t==F){
+                                        while(centre_line < 0x10 && right_line < 
+      0x10 && left_line < 0x10){
+                                                left_line = ADC_Conversion(3);
+                                                centre_line = ADC_Conversion(2);
+                                                right_line = ADC_Conversion(1);
+                                        //      lcd_print(1, 1, left_line, 3);
+                                        lcd_print(1, 5, centre_line, 3);
+                                        lcd_print(1, 9, curTurningLane, 3);
+                                        lcd_print(2, 1, count, 3);
+                                                lcd_print(2, 5, t, 3);
+                                                lcd_print(2, 9, skip_lanes, 3);
+                                                forward();
+                                                velocity(vel,vel);
+                                        }
+                                }
+                                lcd_print(2, 9, right_line, 3);
+                                if(right_skip != 1) i++;
+                                count=0;                                
+                        }
+                        else{// if lane to skip then move forward along the big s
+      quare and cross the square
+                                while(centre_line < 0x10 && right_line < 0x10 && 
+      left_line < 0x10){
+                                        left_line = ADC_Conversion(3);
+                                        centre_line = ADC_Conversion(2);
+                                        right_line = ADC_Conversion(1);
+                                //      lcd_print(1, 1, left_line, 3);
+                                lcd_print(1, 5, centre_line, 3);
+                                lcd_print(1, 9, curTurningLane, 3);
+                                lcd_print(2, 1, count, 3);
+                                        lcd_print(2, 5, t, 3);
+                                        lcd_print(2, 9, skip_lanes, 3);
+                                        forward();
+                                        velocity(vel,vel);
+                                }
+                        }
+        //      }
+                forward();
+                velocity(vel,vel);
+        }
+        else if (centre_line < 0x12) {
+                forward();velocity(vel, vel); buzzer_off();// on the line, contin
+      ue following it
+        }
+        _delay_ms(50);
+}
+\end{DoxyCode}
+\hypertarget{white__line_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}{
+\index{white\_\-line.c@{white\_\-line.c}!main@{main}}
+\index{main@{main}!white_line.c@{white\_\-line.c}}
+\subsubsection[{main}]{\setlength{\rightskip}{0pt plus 5cm}int main (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{white__line_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}
+It extracts the three values of direction , turningLanes and skipLanes which were stored after recieving these values thorugh zigbee module from the central(GPS) server and calls the lineFollow function which will use these values to move forward. 
+\begin{DoxyCode}
+          {
+
+        init_devices();
+
+        lcd_set_4bit();
+        lcd_init();
+        uart0_init();
+        lcd_string("IR6 IR7 IR8");
+        _delay_ms(3000);
+                
+
+        PORTA = 0x06;
+        velocity(vel,vel);
+        count=0;
+        i=0;
+        /*turningLane[0] = 2;
+        turningLane[1] = 2;
+        turningLane[2] = 2;
+        t[0] = 0;
+        t[1] = 0;
+        t[2] = 3;
+        skipLanes[0] = 0;
+        skipLanes[1] = 0;
+        skipLanes[2] = 3;*/
+
+
+        while(1){
+//move = 1;
+        if(move==1){
+                curTurningLane = turningLane[i];
+                turn curTurn = t[i];
+                skip_lanes = skipLanes[i];
+                //lcd_print(2, 1, vel, 3);
+                lineFollow(curTurn);
+        }
+        else {
+                stop();
+                // not recieved the command to move from the zigbee module
+                }
+        }
+}
+\end{DoxyCode}
+\hypertarget{white__line_8c_a10cb8a1450bfb05cd9c72ad09ce7f2fe}{
+\index{white\_\-line.c@{white\_\-line.c}!motion\_\-set@{motion\_\-set}}
+\index{motion\_\-set@{motion\_\-set}!white_line.c@{white\_\-line.c}}
+\subsubsection[{motion\_\-set}]{\setlength{\rightskip}{0pt plus 5cm}void motion\_\-set (
+\begin{DoxyParamCaption}
+\item[{unsigned char}]{Direction}
+\end{DoxyParamCaption}
+)}}
+\label{white__line_8c_a10cb8a1450bfb05cd9c72ad09ce7f2fe}
+Function used for setting motor's direction 
+\begin{DoxyCode}
+{
+ unsigned char PortARestore = 0;
+
+ Direction &= 0x0F;                     // removing upper nibbel as it is not nee
+      ded
+ PortARestore = PORTA;                  // reading the PORTA's original status
+ PortARestore &= 0xF0;                  // setting lower direction nibbel to 0
+ PortARestore |= Direction;     // adding lower nibbel for direction command and 
+      restoring the PORTA status
+ PORTA = PortARestore;                  // setting the command to the port
+}
+\end{DoxyCode}
+\hypertarget{white__line_8c_ae56b9a694abd24fe3e7af591fc50b748}{
+\index{white\_\-line.c@{white\_\-line.c}!right@{right}}
+\index{right@{right}!white_line.c@{white\_\-line.c}}
+\subsubsection[{right}]{\setlength{\rightskip}{0pt plus 5cm}void right (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}
+\label{white__line_8c_ae56b9a694abd24fe3e7af591fc50b748}
+Move the bot to right 
+\begin{DoxyCode}
+{
+  motion_set(0x0A);
+}
+\end{DoxyCode}
+\hypertarget{white__line_8c_a8cf9e2dc043ac2c788c78e6dd407e6e8}{
+\index{white\_\-line.c@{white\_\-line.c}!right\_\-degrees@{right\_\-degrees}}
+\index{right\_\-degrees@{right\_\-degrees}!white_line.c@{white\_\-line.c}}
+\subsubsection[{right\_\-degrees}]{\setlength{\rightskip}{0pt plus 5cm}void right\_\-degrees (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{Degrees}
+\end{DoxyParamCaption}
+)}}
+\label{white__line_8c_a8cf9e2dc043ac2c788c78e6dd407e6e8}
+Function to move the bot right by given Degrees 
+\begin{DoxyCode}
+{
+// 88 pulses for 360 degrees rotation 4.090 degrees per count
+ right(); //Turn right
+ angle_rotate(Degrees);
+}
+\end{DoxyCode}
+\hypertarget{white__line_8c_a0db68d18b578ab9e12bc1d80915ef0d7}{
+\index{white\_\-line.c@{white\_\-line.c}!right\_\-encoder\_\-pin\_\-config@{right\_\-encoder\_\-pin\_\-config}}
+\index{right\_\-encoder\_\-pin\_\-config@{right\_\-encoder\_\-pin\_\-config}!white_line.c@{white\_\-line.c}}
+\subsubsection[{right\_\-encoder\_\-pin\_\-config}]{\setlength{\rightskip}{0pt plus 5cm}void right\_\-encoder\_\-pin\_\-config (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}
+\label{white__line_8c_a0db68d18b578ab9e12bc1d80915ef0d7}
+Function to configure INT5 (PORTE 5) pin as input for the right position encoder 
+\begin{DoxyCode}
+{
+ DDRE  = DDRE & 0xDF;  //Set the direction of the PORTE 4 pin as input
+ PORTE = PORTE | 0x20; //Enable internal pullup for PORTE 4 pin
+}
+\end{DoxyCode}
+\hypertarget{white__line_8c_a2a3c14516d859b716d739bcfe41fa52f}{
+\index{white\_\-line.c@{white\_\-line.c}!Sharp\_\-GP2D12\_\-estimation@{Sharp\_\-GP2D12\_\-estimation}}
+\index{Sharp\_\-GP2D12\_\-estimation@{Sharp\_\-GP2D12\_\-estimation}!white_line.c@{white\_\-line.c}}
+\subsubsection[{Sharp\_\-GP2D12\_\-estimation}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int Sharp\_\-GP2D12\_\-estimation (
+\begin{DoxyParamCaption}
+\item[{unsigned char}]{adc\_\-reading}
+\end{DoxyParamCaption}
+)}}
+\label{white__line_8c_a2a3c14516d859b716d739bcfe41fa52f}
+To calculate sensor values 
+\begin{DoxyCode}
+                                                               {
+
+        float distance;
+        distance = (int)(10.00*(2799.6* (1/pow(adc_reading, 1.1546))));
+        int distanceInt = (int) distance;
+
+        if(distance>800){
+                distanceInt = 800;
+        }
+
+        return distanceInt;
+}
+\end{DoxyCode}
+\hypertarget{white__line_8c_ab5f8e79f6ffa3be348924e573e8dcfd1}{
+\index{white\_\-line.c@{white\_\-line.c}!SIGNAL@{SIGNAL}}
+\index{SIGNAL@{SIGNAL}!white_line.c@{white\_\-line.c}}
+\subsubsection[{SIGNAL}]{\setlength{\rightskip}{0pt plus 5cm}SIGNAL (
+\begin{DoxyParamCaption}
+\item[{SIG\_\-USART0\_\-RECV}]{}
+\end{DoxyParamCaption}
+)}}
+\label{white__line_8c_ab5f8e79f6ffa3be348924e573e8dcfd1}
+Interrupt Routine for recieving signal from zigbee. First the data recieved is converted into integer and stored in variable binVal. The data is sent in this form -\/$>$ dir$\ast$50 + lane$\ast$6 + skipLane. Sending data in this form is convenient for handling. So the direction,skipLane and lane (lanes to be skipped before turning) are extracted and stored in the appropraite arrays. Also when 'a' is sent thorugh zigbee module which will be sent e.g when it sees a red light thus instructing the bot to stop. Similarly 'b' is sent to make the bot start moving. Speed of the bot after seeing the speed limit sign boards is communicated through the characters 'c','d' and 'e'. 
+\begin{DoxyCode}
+{
+        unsigned char data = UDR0;
+        
+        int binVal = (int) data;
+
+        int dir = binVal/50;
+        binVal = (binVal-dir*50);
+        int lane = binVal/6;
+        binVal = (binVal-lane*6);
+        int skipLane = binVal;
+
+// write the values of direction  , turning lanes and skip lanes in the appropria
+      te arrays
+        t[counter] = dir;
+        turningLane[counter] = lane;
+        skipLanes[counter] = skipLane;
+
+        lcd_print(1, 1, dir, 3);
+        lcd_print(1, 5, lane, 3);
+        lcd_print(1, 9, skipLane, 3);
+        lcd_print(2, 1, counter, 3);
+        lcd_print(2, 5, binVal, 3);
+        counter++;
+        int x;
+        //detect speed of bot
+        if(data=='a') {
+                move=0;
+                x = 0;
+    }
+        else if(data=='b') {
+                move=1;
+                x=1;
+        }
+        
+        if(data=='c') {
+                vel = 45;
+                x=30;
+        }
+        else if(data=='d'){
+                vel = 90;
+                x=60;
+        }
+        else if(data=='e'){
+                vel = 120;
+                x=90;
+        }
+
+        //a=````3;
+
+        lcd_print(1, 1, (int)x, 3);
+}
+\end{DoxyCode}
+\hypertarget{white__line_8c_a9f675d6f341de272935fc3a4bd7683ce}{
+\index{white\_\-line.c@{white\_\-line.c}!soft\_\-left@{soft\_\-left}}
+\index{soft\_\-left@{soft\_\-left}!white_line.c@{white\_\-line.c}}
+\subsubsection[{soft\_\-left}]{\setlength{\rightskip}{0pt plus 5cm}void soft\_\-left (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}
+\label{white__line_8c_a9f675d6f341de272935fc3a4bd7683ce}
+Soft left turn 
+\begin{DoxyCode}
+{
+ motion_set(0x04);
+}
+\end{DoxyCode}
+\hypertarget{white__line_8c_a84253b553e3fc3d181945f643e7aa82d}{
+\index{white\_\-line.c@{white\_\-line.c}!soft\_\-left\_\-2@{soft\_\-left\_\-2}}
+\index{soft\_\-left\_\-2@{soft\_\-left\_\-2}!white_line.c@{white\_\-line.c}}
+\subsubsection[{soft\_\-left\_\-2}]{\setlength{\rightskip}{0pt plus 5cm}void soft\_\-left\_\-2 (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}
+\label{white__line_8c_a84253b553e3fc3d181945f643e7aa82d}
+soft left turn 
+\begin{DoxyCode}
+{
+ motion_set(0x01);
+}
+\end{DoxyCode}
+\hypertarget{white__line_8c_a3bc73fd02a38e7bd23dd8ecd87601c51}{
+\index{white\_\-line.c@{white\_\-line.c}!soft\_\-left\_\-2\_\-degrees@{soft\_\-left\_\-2\_\-degrees}}
+\index{soft\_\-left\_\-2\_\-degrees@{soft\_\-left\_\-2\_\-degrees}!white_line.c@{white\_\-line.c}}
+\subsubsection[{soft\_\-left\_\-2\_\-degrees}]{\setlength{\rightskip}{0pt plus 5cm}void soft\_\-left\_\-2\_\-degrees (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{Degrees}
+\end{DoxyParamCaption}
+)}}
+\label{white__line_8c_a3bc73fd02a38e7bd23dd8ecd87601c51}
+Function to move the bot left softly by given Degrees 
+\begin{DoxyCode}
+{
+ // 176 pulses for 360 degrees rotation 2.045 degrees per count
+ soft_left_2(); //Turn reverse soft left
+ Degrees=Degrees*2;
+ angle_rotate(Degrees);
+}
+\end{DoxyCode}
+\hypertarget{white__line_8c_a1013e84d64ce4284bdd33542678b36ba}{
+\index{white\_\-line.c@{white\_\-line.c}!soft\_\-left\_\-degrees@{soft\_\-left\_\-degrees}}
+\index{soft\_\-left\_\-degrees@{soft\_\-left\_\-degrees}!white_line.c@{white\_\-line.c}}
+\subsubsection[{soft\_\-left\_\-degrees}]{\setlength{\rightskip}{0pt plus 5cm}void soft\_\-left\_\-degrees (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{Degrees}
+\end{DoxyParamCaption}
+)}}
+\label{white__line_8c_a1013e84d64ce4284bdd33542678b36ba}
+Function to move the bot left softly by given Degrees 
+\begin{DoxyCode}
+{
+ // 176 pulses for 360 degrees rotation 2.045 degrees per count
+ soft_left(); //Turn soft left
+ Degrees=Degrees*2;
+ angle_rotate(Degrees);
+}
+\end{DoxyCode}
+\hypertarget{white__line_8c_a86d205d334c3761364b7db60cb0257b6}{
+\index{white\_\-line.c@{white\_\-line.c}!soft\_\-right@{soft\_\-right}}
+\index{soft\_\-right@{soft\_\-right}!white_line.c@{white\_\-line.c}}
+\subsubsection[{soft\_\-right}]{\setlength{\rightskip}{0pt plus 5cm}void soft\_\-right (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}
+\label{white__line_8c_a86d205d334c3761364b7db60cb0257b6}
+Soft right turn 
+\begin{DoxyCode}
+{
+ motion_set(0x02);
+}
+\end{DoxyCode}
+\hypertarget{white__line_8c_ac5f0c8df1383322f922faf6a4ea30d57}{
+\index{white\_\-line.c@{white\_\-line.c}!soft\_\-right\_\-2\_\-degrees@{soft\_\-right\_\-2\_\-degrees}}
+\index{soft\_\-right\_\-2\_\-degrees@{soft\_\-right\_\-2\_\-degrees}!white_line.c@{white\_\-line.c}}
+\subsubsection[{soft\_\-right\_\-2\_\-degrees}]{\setlength{\rightskip}{0pt plus 5cm}void soft\_\-right\_\-2\_\-degrees (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{Degrees}
+\end{DoxyParamCaption}
+)}}
+\label{white__line_8c_ac5f0c8df1383322f922faf6a4ea30d57}
+Function to move the bot right softly by given Degrees 
+\begin{DoxyCode}
+{
+ // 176 pulses for 360 degrees rotation 2.045 degrees per count
+ soft_right_2();  //Turn reverse soft right
+ Degrees=Degrees*2;
+ angle_rotate(Degrees);
+}
+\end{DoxyCode}
+\hypertarget{white__line_8c_a2c63b1157eee42d68b242cd9a37eec98}{
+\index{white\_\-line.c@{white\_\-line.c}!soft\_\-right\_\-degrees@{soft\_\-right\_\-degrees}}
+\index{soft\_\-right\_\-degrees@{soft\_\-right\_\-degrees}!white_line.c@{white\_\-line.c}}
+\subsubsection[{soft\_\-right\_\-degrees}]{\setlength{\rightskip}{0pt plus 5cm}void soft\_\-right\_\-degrees (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{Degrees}
+\end{DoxyParamCaption}
+)}}
+\label{white__line_8c_a2c63b1157eee42d68b242cd9a37eec98}
+Function to move the bot right softly by given Degrees 
+\begin{DoxyCode}
+{
+ // 176 pulses for 360 degrees rotation 2.045 degrees per count
+ soft_right();  //Turn soft right
+ Degrees=Degrees*2;
+ angle_rotate(Degrees);
+}
+\end{DoxyCode}
+\hypertarget{white__line_8c_aacf6bf8e121fea8b0a92d7197b73fe27}{
+\index{white\_\-line.c@{white\_\-line.c}!stop@{stop}}
+\index{stop@{stop}!white_line.c@{white\_\-line.c}}
+\subsubsection[{stop}]{\setlength{\rightskip}{0pt plus 5cm}void stop (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}
+\label{white__line_8c_aacf6bf8e121fea8b0a92d7197b73fe27}
+Stop the bot 
+\begin{DoxyCode}
+{
+  motion_set(0x00);
+}
+\end{DoxyCode}
+\hypertarget{white__line_8c_a578f7cc9b705ce549aa856c927b102e8}{
+\index{white\_\-line.c@{white\_\-line.c}!timer5\_\-init@{timer5\_\-init}}
+\index{timer5\_\-init@{timer5\_\-init}!white_line.c@{white\_\-line.c}}
+\subsubsection[{timer5\_\-init}]{\setlength{\rightskip}{0pt plus 5cm}void timer5\_\-init (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{white__line_8c_a578f7cc9b705ce549aa856c927b102e8}
+Timer 5 initialised in PWM mode for velocity control Prescale:64 PWM 8bit fast, TOP=0x00FF Timer Frequency:674.988Hz 
+\begin{DoxyCode}
+{
+
+        TCCR5B = 0x00;  //Stop
+        TCNT5H = 0xFF;  //Counter higher 8-bit value to which OCR5xH value is com
+      pared with
+        TCNT5L = 0x01;  //Counter lower 8-bit value to which OCR5xH value is comp
+      ared with
+        OCR5AH = 0x00;  //Output compare register high value for Left Motor
+        OCR5AL = 0xFF;  //Output compare register low value for Left Motor
+        OCR5BH = 0x00;  //Output compare register high value for Right Motor
+        OCR5BL = 0xFF;  //Output compare register low value for Right Motor
+        OCR5CH = 0x00;  //Output compare register high value for Motor C1
+        OCR5CL = 0xFF;  //Output compare register low value for Motor C1
+        TCCR5A = 0xA9;  /*{COM5A1=1, COM5A0=0; COM5B1=1, COM5B0=0; COM5C1=1 COM5C
+      0=0}
+                                          For Overriding normal port functionalit
+       to OCRnA outputs.
+                                          {WGM51=0, WGM50=1} Along With WGM52 in 
+      TCCR5B for Selecting FAST PWM 8-bit Mode*/
+        
+        TCCR5B = 0x0B;  //WGM12=1; CS12=0, CS11=1, CS10=1 (Prescaler=64)
+}
+\end{DoxyCode}
+\hypertarget{white__line_8c_a0c9f844d5abacdeb76ec96c2ed3b4bc9}{
+\index{white\_\-line.c@{white\_\-line.c}!velocity@{velocity}}
+\index{velocity@{velocity}!white_line.c@{white\_\-line.c}}
+\subsubsection[{velocity}]{\setlength{\rightskip}{0pt plus 5cm}void velocity (
+\begin{DoxyParamCaption}
+\item[{unsigned char}]{left\_\-motion, }
+\item[{unsigned char}]{right\_\-motion}
+\end{DoxyParamCaption}
+)}}
+\label{white__line_8c_a0c9f844d5abacdeb76ec96c2ed3b4bc9}
+To set wheel velocities 
+\begin{DoxyCode}
+                                                                     {
+        if (left_motion > 255) left_motion = 255;
+        if (right_motion > 255) right_motion = 255;
+        OCR5AL = (unsigned char)left_motion;
+        OCR5BL = (unsigned char)right_motion;
+}       
+\end{DoxyCode}
+
+
+\subsection{Variable Documentation}
+\hypertarget{white__line_8c_a13006074294a071b6c7a268a498f77f7}{
+\index{white\_\-line.c@{white\_\-line.c}!temp@{temp}}
+\index{temp@{temp}!white_line.c@{white\_\-line.c}}
+\subsubsection[{temp}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int {\bf temp}}}
+\label{white__line_8c_a13006074294a071b6c7a268a498f77f7}
+Various global variables needed 

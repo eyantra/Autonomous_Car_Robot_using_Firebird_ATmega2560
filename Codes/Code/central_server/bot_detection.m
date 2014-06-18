@@ -1,0 +1,147 @@
+
+%----------------------config parameters---------------------------%
+%% for cropping
+xmin = 102;
+ymin = 15;
+wid = 408;
+ht = 383;
+
+%% Color thresholds 
+
+Red_1 = 220;
+Red_2 = 190;
+Red_3 = 190;
+Blue_1 = 170; 
+Blue_2 = 170;
+Blue_3 = 220;
+
+%%area thresholds
+area_min = 400;
+area_max = 1000;
+
+%----------------------config ends---------------------------------%
+
+
+%RGB = imread('bot_real.jpg');
+%imshow(RGB);
+     
+vid=videoinput('winvideo',2,'YUY2_640x480'); % setting camera properties
+set(vid, 'ReturnedColorspace', 'rgb')
+start(vid);
+preview(vid);
+RGB = getsnapshot(vid);
+RGB = imcrop(RGB, [xmin, ymin, wid, ht]);
+
+flushdata(vid);
+figure, imshow(RGB);
+     
+dim=size(RGB);%stores dimension of RGB matrix
+%Color segmentation code
+colb = zeros(dim(1),dim(2));
+colw = zeros(dim(1),dim(2));
+x3=zeros(10,1);d=zeros(10,1);
+for i=1:dim(1)
+    for j=1:dim(2)
+        if( RGB(i,j,1) >= Red_1 && RGB(i,j,2) <=Red_2&& RGB(i,j,3) <= Red_3)  %Front Tag(Red) on Firebird
+            colw(i,j)=255;          
+        end
+        if(RGB(i,j,1) <Blue_1 && RGB(i,j,2)<Blue_2 && RGB(i,j,3) >= Blue_3)  %Back Tag(blue) on Firebird 
+             colb(i,j)=255;
+        end            
+    end
+end
+
+%%smoothening image
+structElemSmooth= strel('square', 5);
+colw = imerode(colw, structElemSmooth);
+colw= imdilate(colw, structElemSmooth);
+colb = imerode(colb, structElemSmooth);
+colb= imdilate(colb, structElemSmooth);
+
+colw = imdilate(colw, structElemSmooth);
+colw= imerode(colw, structElemSmooth);
+colb = imdilate(colb, structElemSmooth);
+colb= imerode(colb, structElemSmooth);
+
+figure, imshow(colb);
+figure, imshow(colw);
+
+diff_im1 = bwareaopen(colw,10);
+bw1 = bwlabel(diff_im1, 8);
+RGB_label = label2rgb(bw1);
+figure,imshow(RGB_label);
+
+stats = regionprops(bw1, 'basic');
+hold on
+ct1=0;
+ct2=0;
+
+ct3=0;
+ct4=0;
+
+%performing bounding box operation on red tag
+for object = 1:length(stats)
+            bb = stats(object).BoundingBox;
+            
+            area1 = stats(object).Area;
+			%area1
+            if area1 > area_min && area1< area_max
+                area1
+                x = bb(1);
+                y = bb(2);
+                w = bb(3);
+                h = bb(4);
+                ct1=(bb(1)+bb(3)/2)
+				ct2=(bb(2)+bb(4)/2)
+				x2=ct1;y2=ct2;	
+				rectangle('Position',bb,'EdgeColor','r','LineWidth',2)
+				%plot(ct1,ct2,'r*')
+                
+            end
+            
+            hold off
+end
+diff_im2 = bwareaopen(colb,10);
+bw2 = bwlabel(diff_im2, 8);
+RGB_label1 = label2rgb(bw2);
+figure,imshow(RGB_label1);
+
+
+stats = regionprops(bw2, 'basic');
+hold on
+%performing bounding box operation on blue tag
+for object = 1:length(stats)
+            bb = stats(object).BoundingBox;
+          
+            area2 = stats(object).Area
+			if area2 > area_min && area2 < area_max
+                area2
+                x = bb(1);
+                y = bb(2);
+                w = bb(3);
+                h = bb(4);
+                ct3=(bb(1)+bb(3)/2)
+				ct4=(bb(2)+bb(4)/2)
+				rectangle('Position',bb,'EdgeColor','b','LineWidth',2)
+				%plot(ct3,ct4,'b*')
+                
+            end
+            
+hold off
+end
+
+%finding robot center
+o_center_y = (ct1+ct3)/2
+o_center_x = (ct2+ct4)/2
+%diff_im1(o_center_y,o_center_x)=255;
+%imshow(diff_im1+diff_im2);
+%%(ct1,ct2) is center of front red tag on bot
+%%(ct3,ct4) is center of back blue tag on bot
+%%writing to file
+fid = fopen('botPos','w');
+fprintf(fid,'%d ',floor(ct2));
+fprintf(fid,'%d ',floor(ct1));
+fprintf(fid,'%d ',floor(ct4));
+fprintf(fid,'%d ',floor(ct3));
+
+fclose(fid);

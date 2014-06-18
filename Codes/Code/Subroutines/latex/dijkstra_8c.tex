@@ -1,0 +1,440 @@
+\hypertarget{dijkstra_8c}{
+\section{dijkstra.c File Reference}
+\label{dijkstra_8c}\index{dijkstra.c@{dijkstra.c}}
+}
+{\ttfamily \#include $<$stdio.h$>$}\par
+{\ttfamily \#include $<$stdlib.h$>$}\par
+{\ttfamily \#include $<$math.h$>$}\par
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structstate}{state}
+\item 
+struct \hyperlink{structjunction}{junction}
+\end{DoxyCompactItemize}
+\subsection*{Defines}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{dijkstra_8c_aa84a29002ab81c719c0d07bb446296e0}{
+\#define {\bfseries INFINITE}~1000000}
+\label{dijkstra_8c_aa84a29002ab81c719c0d07bb446296e0}
+
+\item 
+\#define \hyperlink{dijkstra_8c_af5250425005ab2eea529c4ac57fcdae3}{roadThresh}~80
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{structstate}{state} \hyperlink{dijkstra_8c_aa849497e3ddd7fc3b339a5a65d8e1d7d}{botState}
+\item 
+typedef struct \hyperlink{structjunction}{junction} \hyperlink{dijkstra_8c_a753f2f41c6181f91879b56c451d006eb}{node}
+\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{dijkstra_8c_a27e2cc779821c6d574530ff9a527373c}{turn} \{ \par
+{\bfseries F} =  0, 
+{\bfseries L} =  1, 
+{\bfseries B} =  2, 
+{\bfseries R} =  3, 
+\par
+{\bfseries F} =  0, 
+{\bfseries L} =  1, 
+{\bfseries B} =  2, 
+{\bfseries R} =  3
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{dijkstra_8c_a0df3e9a0a9b05c31d10f4cc8bbdd1856}{getNearest} (int $\ast$dist, int $\ast$selected)
+\item 
+int $\ast$ \hyperlink{dijkstra_8c_ab254e0ce2aa89437315f0d67eef85d1f}{path} (\hyperlink{structjunction}{node} $\ast$$\ast$graph, int source, int dest)
+\item 
+\hyperlink{dijkstra_8c_a010ce46a9694b1370a07473a49c6782a}{getAnotherAdjNode} (int node1, int node2, \hyperlink{structjunction}{node} $\ast$$\ast$graph)
+\item 
+int \hyperlink{dijkstra_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}{main} ()
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{dijkstra_8c_a9bb6aa82571eb861fc56723217d23b17}{NUM\_\-NODES}
+\item 
+int \hyperlink{dijkstra_8c_a631341956c255e7659119b88e991b43b}{pathLength} = 0
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{DoxyAuthor}{Author}
+sushil kumar meena (\href{mailto:sushilm.iitb@gmail.com}{\tt sushilm.iitb@gmail.com}) 
+
+mudit malpani (\href{mailto:cooldudemd.malpani@gmail.com}{\tt cooldudemd.malpani@gmail.com}) 
+
+palak dalal (\href{mailto:palak.dalal@gmail.com}{\tt palak.dalal@gmail.com}) 
+
+hemant noval (\href{mailto:novalhemant@gmail.com}{\tt novalhemant@gmail.com})
+\end{DoxyAuthor}
+Description: This file contains routines that can be used to find the shortest distance path from the source node to the destination node on the road map, using the famous Dijkstra's algorithm. Input files are to be placed in the same folder. It takes terminal input for destination. Can be integrated with graphical interface for taking destination input.
+
+SPECIFICATIONS:
+
+1. All the directions b/w nodes(e,w,n,s) will be based on a reference.
+
+2. Overhead camera must be fixed w.r.t. our map
+
+3. The bot will always maintain a state containing current node \& direction(w.r.t. same reference)
+
+4. The bot's turning direction will depend on its state direction. 
+
+\subsection{Define Documentation}
+\hypertarget{dijkstra_8c_af5250425005ab2eea529c4ac57fcdae3}{
+\index{dijkstra.c@{dijkstra.c}!roadThresh@{roadThresh}}
+\index{roadThresh@{roadThresh}!dijkstra.c@{dijkstra.c}}
+\subsubsection[{roadThresh}]{\setlength{\rightskip}{0pt plus 5cm}\#define roadThresh~80}}
+\label{dijkstra_8c_af5250425005ab2eea529c4ac57fcdae3}
+maximum difference in the x/y coordinate of te nodes on same road 
+
+\subsection{Typedef Documentation}
+\hypertarget{dijkstra_8c_aa849497e3ddd7fc3b339a5a65d8e1d7d}{
+\index{dijkstra.c@{dijkstra.c}!botState@{botState}}
+\index{botState@{botState}!dijkstra.c@{dijkstra.c}}
+\subsubsection[{botState}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf state}  {\bf botState}}}
+\label{dijkstra_8c_aa849497e3ddd7fc3b339a5a65d8e1d7d}
+the state of bot i.e. in which direction to turn, lane junctions to be skipped before ant after the turn. \hypertarget{dijkstra_8c_a753f2f41c6181f91879b56c451d006eb}{
+\index{dijkstra.c@{dijkstra.c}!node@{node}}
+\index{node@{node}!dijkstra.c@{dijkstra.c}}
+\subsubsection[{node}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf junction}  {\bf node}}}
+\label{dijkstra_8c_a753f2f41c6181f91879b56c451d006eb}
+structure defining length of a road and number of lanes on it 
+
+\subsection{Enumeration Type Documentation}
+\hypertarget{dijkstra_8c_a27e2cc779821c6d574530ff9a527373c}{
+\index{dijkstra.c@{dijkstra.c}!turn@{turn}}
+\index{turn@{turn}!dijkstra.c@{dijkstra.c}}
+\subsubsection[{turn}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf turn}}}
+\label{dijkstra_8c_a27e2cc779821c6d574530ff9a527373c}
+defines te directions to turn 
+\begin{DoxyCode}
+             {
+    F = 0, L = 1, B = 2, R = 3
+} turn; // turnActual = [TurnOrig + (4-direc)]%4;
+\end{DoxyCode}
+
+
+\subsection{Function Documentation}
+\hypertarget{dijkstra_8c_a010ce46a9694b1370a07473a49c6782a}{
+\index{dijkstra.c@{dijkstra.c}!getAnotherAdjNode@{getAnotherAdjNode}}
+\index{getAnotherAdjNode@{getAnotherAdjNode}!dijkstra.c@{dijkstra.c}}
+\subsubsection[{getAnotherAdjNode}]{\setlength{\rightskip}{0pt plus 5cm}getAnotherAdjNode (
+\begin{DoxyParamCaption}
+\item[{int}]{node1, }
+\item[{int}]{node2, }
+\item[{{\bf node} $\ast$$\ast$}]{graph}
+\end{DoxyParamCaption}
+)}}
+\label{dijkstra_8c_a010ce46a9694b1370a07473a49c6782a}
+returns a node adjacent to 'node1' except 'node2' 
+\begin{DoxyCode}
+                                                    {
+        int i;
+        for(i = 0; i < NUM_NODES; i++){
+                if(graph[node1][i].dist!=-1 && i!=node2){
+                        return i;
+                }
+        }
+}
+\end{DoxyCode}
+\hypertarget{dijkstra_8c_a0df3e9a0a9b05c31d10f4cc8bbdd1856}{
+\index{dijkstra.c@{dijkstra.c}!getNearest@{getNearest}}
+\index{getNearest@{getNearest}!dijkstra.c@{dijkstra.c}}
+\subsubsection[{getNearest}]{\setlength{\rightskip}{0pt plus 5cm}int getNearest (
+\begin{DoxyParamCaption}
+\item[{int $\ast$}]{dist, }
+\item[{int $\ast$}]{selected}
+\end{DoxyParamCaption}
+)}}
+\label{dijkstra_8c_a0df3e9a0a9b05c31d10f4cc8bbdd1856}
+calculates the node nearest to the source of all the nodes in 'dist' 
+\begin{DoxyCode}
+                                         {
+    int i = 0;
+    int minDist = INFINITE;
+    int minNode;
+    for (i = 0; i < NUM_NODES; i++) {
+        if (selected[i] != 1) {
+            //printf("nearNode: %d %d %d %d\n", i, dist[i], minDist, minNode);
+            if (dist[i] < minDist) {
+                minDist = dist[i];
+                minNode = i;
+            }
+        }
+    }
+    return minNode;
+}
+\end{DoxyCode}
+\hypertarget{dijkstra_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}{
+\index{dijkstra.c@{dijkstra.c}!main@{main}}
+\index{main@{main}!dijkstra.c@{dijkstra.c}}
+\subsubsection[{main}]{\setlength{\rightskip}{0pt plus 5cm}int main (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{dijkstra_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}
+Main File 
+\begin{DoxyCode}
+           {
+    FILE *nodeFile;//file containing number of nodes and their x & y coordinates
+    nodeFile = fopen("nodeAct", "r");
+    FILE *edgeFile;//< file containing number of lanes on each road in te form of
+       an adjavcency matrix
+    edgeFile = fopen("edgesAct", "r");
+
+    fscanf(nodeFile, "%d", &NUM_NODES);
+
+    node **graph = malloc(NUM_NODES * sizeof (node*));//< adjacecny matrix with e
+      ach edge containg number of lanes
+
+    int* xCords = malloc(NUM_NODES * sizeof (int));//< x coordinates of the nodes
+      
+    int* yCords = malloc(NUM_NODES * sizeof (int));//< y coordinates of the nodes
+      
+
+    int i;
+    for (i = 0; i < NUM_NODES; i++) {
+        graph[i] = malloc(NUM_NODES * sizeof (node));
+        //graph[i][i].dist = -1;
+    }
+
+    for (i = 0; i < NUM_NODES; i++) {
+        fscanf(nodeFile, "%d", &xCords[i]);
+        fscanf(nodeFile, "%d", &yCords[i]);
+    }
+
+        // writing number of lanes and length of roads to the graph
+    int binary;
+    int j, x1, x2, y1, y2, distance;
+    for (i = 0; i < NUM_NODES; i++) {
+        for (j = 0; j < NUM_NODES; j++) {
+            fscanf(edgeFile, "%d", &binary);
+            if (binary == 0) graph[i][j].dist = -1;
+            else {
+                x1 = xCords[i];
+                y1 = yCords[i];
+                x2 = xCords[j];
+                y2 = yCords[j];
+                distance = ((y2 - y1)*(y2 - y1) + (x2 - x1)*(x2 - x1));
+                graph[i][j].dist = distance;
+                graph[i][j].num_lanes = binary;
+            }
+            printf("%d,%d : %d\n",i,j,binary);
+        }
+    }
+
+    int bot_fx,bot_fy,bot_bx,bot_by;
+
+        FILE *botPos = fopen("botPos","r");
+
+    fscanf(botPos,"%d",&bot_fx);
+    fscanf(botPos,"%d",&bot_fy);
+    fscanf(botPos,"%d",&bot_bx);
+    fscanf(botPos,"%d",&bot_by);
+
+    int source;
+
+    FILE *startFile;// source node
+    startFile = fopen("start", "r");
+
+    fscanf(startFile, "%d", &source);
+
+    int dest;// destination node from user input
+        printf("Please specify the destination node : ");
+        scanf("%d",&dest);
+    int* actualPath = path(graph, source, dest);// path from source to destinatio
+      n
+
+
+    i = 1;
+    int prevX = bot_fx;
+    int prevY = bot_fy;
+    int currX, currY, nextX, nextY, prevDelX, prevDelY, delX, delY;
+    float slope, prevSlope;
+    botState *path = malloc(pathLength*sizeof(botState));
+    currX = xCords[source];
+    currY = yCords[source];
+    path[0].direc = F;
+    path[0].nodeNum = source;
+    path[0].turningLane = 0;
+    while (1) {
+        nextX = xCords[actualPath[i]];
+        nextY = yCords[actualPath[i]];
+        delX = abs(nextX - currX);
+        delY = abs(nextY - currY);
+        prevDelX = abs(currX - prevX);
+        prevDelY = abs(currY - prevY);
+       
+                //colculate bot state after each turn
+                int node1 = actualPath[i-1];
+                int node2 = actualPath[i];
+                if((prevDelX < roadThresh && delX < roadThresh) || (prevDelY < 
+      roadThresh && delY < roadThresh)) {
+                        path[i].direc = F;
+                        int nodeExtra = getAnotherAdjNode(node1,node2,graph);
+                        path[i].turningLane = graph[node1][nodeExtra].num_lanes;
+                }
+                else if(prevDelX < roadThresh && delY < roadThresh){
+                        if(prevY < currY){
+                                if(currX > nextX) {
+                                        path[i].direc = L;
+                                        path[i].turningLane = 1;
+                                }
+                                else {
+                                        path[i].direc = R;
+                                        path[i].turningLane = graph[node1][node2]
+      .num_lanes;
+                                }
+                        }
+                        else{
+                                if(currY < nextY) {
+                                        path[i].direc = L;
+                                        path[i].turningLane = 1;
+                                }
+                                else{
+                                        path[i].direc = R;
+                                        path[i].turningLane = graph[node1][node2]
+      .num_lanes;
+                                }
+                        }
+                }
+                else if(prevDelY < roadThresh && delX < roadThresh){
+                        if(prevX < currX){
+                                if(currY < nextY) {
+                                        path[i].direc = L;
+                                        path[i].turningLane = 1;
+                                }
+                                else {
+                                        path[i].direc = R;
+                                        path[i].turningLane = graph[node1][node2]
+      .num_lanes;
+                                }
+                        }
+                        else{
+                                if(currY > nextY){
+                                        path[i].direc = L;
+                                        path[i].turningLane = 1;
+                                }
+                                else {
+                                        path[i].direc = R;
+                                        path[i].turningLane = graph[node1][node2]
+      .num_lanes;
+                                }
+                        }
+                }
+
+        path[i].nodeNum = actualPath[i];
+        if (actualPath[i] == dest) break;
+        prevX = currX;
+        prevY = currY;
+        currX = nextX;
+        currY = nextY;
+        i++;
+    }
+        
+    fclose(startFile);
+    FILE *starFile = fopen("pathD", "w");
+
+        int as=0;
+    printf("Path\n");
+    for(i=0;i<=pathLength;i++){// writing path to file
+        printf("%d(%d,%d)->\n",path[i].nodeNum,path[i].direc,path[i].turningLane)
+      ;
+        fprintf(starFile,"%d\n",path[i].direc);
+        fprintf(starFile,"%d\n",path[i].turningLane);
+        fprintf(starFile,"%d\n",as);
+    }
+    printf("\n");
+        fclose(starFile);
+}
+\end{DoxyCode}
+\hypertarget{dijkstra_8c_ab254e0ce2aa89437315f0d67eef85d1f}{
+\index{dijkstra.c@{dijkstra.c}!path@{path}}
+\index{path@{path}!dijkstra.c@{dijkstra.c}}
+\subsubsection[{path}]{\setlength{\rightskip}{0pt plus 5cm}int$\ast$ path (
+\begin{DoxyParamCaption}
+\item[{{\bf node} $\ast$$\ast$}]{graph, }
+\item[{int}]{source, }
+\item[{int}]{dest}
+\end{DoxyParamCaption}
+)}}
+\label{dijkstra_8c_ab254e0ce2aa89437315f0d67eef85d1f}
+calculates shortest path between 'source' and 'dest' using dijkstra and returns te ordered array of the nodes in the path 
+\begin{DoxyCode}
+                                              {
+    int *dist = malloc(NUM_NODES * sizeof (int));// distance of nodes from source
+      
+    int *prev = malloc(NUM_NODES * sizeof (int));// parent node
+    int *selected = malloc(NUM_NODES * sizeof (int));// nodes to which shortest p
+      ath has been found
+    int i = 0;
+    for (i = 0; i < NUM_NODES; i++) {
+        dist[i] = INFINITE;
+        prev[i] = -1;
+        selected[i] = 0;
+    }
+    dist[source] = 0;
+    //selected[source]=1;
+    while (selected[dest] != 1) {
+        int curr = getNearest(dist, selected);// get nearest node
+        //printf("curr:%d\n", curr);
+        if (dist[curr] == INFINITE) return NULL;// no path to destination
+        selected[curr] = 1;// mark the node as selected
+        for (i = 0; i < NUM_NODES; i++) {
+            //printf("",i,selected);
+            if (selected[i] != 1 && graph[curr][i].dist != -1) {
+                int newDist = dist[curr] + graph[curr][i].dist;// calculate short
+      est distance from source
+                //printf("%d,%d,%d ",i,newDist,dist[i]);
+                if (newDist < dist[i]) {
+                    //printf("updated");
+                    dist[i] = newDist;
+                    prev[i] = curr;// update parent
+                }
+                printf("\n");
+            }
+        }
+    }
+    int *reversePath = malloc(NUM_NODES * sizeof (int));//path from destination t
+      o source
+    int parent = dest;
+    while (parent != source) {
+        parent = prev[parent];
+        printf("%d,", parent);
+        reversePath[pathLength] = parent;
+        pathLength++;
+    }
+    printf("length: %d\n", pathLength);
+    int *actualPath = malloc((NUM_NODES + 1) * sizeof (int));//path from source t
+      o destination
+    for (i = 0; i < pathLength; i++) {
+        actualPath[i] = reversePath[pathLength - 1 - i];
+        printf("->%d", actualPath[i]);
+    }
+    actualPath[i] = dest;
+    printf("->%d\n", dest);
+    return actualPath;
+}
+\end{DoxyCode}
+
+
+\subsection{Variable Documentation}
+\hypertarget{dijkstra_8c_a9bb6aa82571eb861fc56723217d23b17}{
+\index{dijkstra.c@{dijkstra.c}!NUM\_\-NODES@{NUM\_\-NODES}}
+\index{NUM\_\-NODES@{NUM\_\-NODES}!dijkstra.c@{dijkstra.c}}
+\subsubsection[{NUM\_\-NODES}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf NUM\_\-NODES}}}
+\label{dijkstra_8c_a9bb6aa82571eb861fc56723217d23b17}
+number of road junctions \hypertarget{dijkstra_8c_a631341956c255e7659119b88e991b43b}{
+\index{dijkstra.c@{dijkstra.c}!pathLength@{pathLength}}
+\index{pathLength@{pathLength}!dijkstra.c@{dijkstra.c}}
+\subsubsection[{pathLength}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf pathLength} = 0}}
+\label{dijkstra_8c_a631341956c255e7659119b88e991b43b}
+number of nodes in the path calculated 
